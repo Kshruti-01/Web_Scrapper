@@ -1,0 +1,10 @@
+(venv) PS C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper> python main.py 
+Traceback (most recent call last):
+  File "C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper\main.py", line 12, in <module>
+    from src import MROScraper, ensure_export_dir
+  File "C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper\src\__init__.py", line 6, in <module>
+    from src.models import Article, ScraperConfig
+  File "C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper\src\models.py", line 9
+    from config.settings import KEYWORDS, USER_AGENT, REQUEST_TIMEOUT,
+                                                                       ^
+SyntaxError: trailing comma not allowed without surrounding parentheses
