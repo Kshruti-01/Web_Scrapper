@@ -10,11 +10,7 @@ from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
 
 from src.models import ScraperConfig, Article
-from src.utils import (
-    setup_logging, 
-    compile_keyword_pattern, 
-    check_robots,
-)
+from src.utils import setup_logging, compile_keyword_pattern, check_robots
 from config.settings import MAX_ARTICLES_PER_SITE
 
 
@@ -84,7 +80,7 @@ class MROScraper:
                 if any(p in full_url.lower() for p in ['/news/', '/article/', '/2024/', '/2025/', '/mro-']):
                     links.add(full_url)
         
-        return list(links)[:MAX_ARTICLES_PER_SITE * 2]  # Get more than needed, will filter later
+        return list(links)[:MAX_ARTICLES_PER_SITE * 2]
     
     def _extract_article_content(self, url: str, soup: BeautifulSoup) -> Optional[Article]:
         """Extract structured article data from page"""
@@ -176,7 +172,7 @@ class MROScraper:
             article = self._extract_article_content(url, article_soup)
             if article:
                 articles.append(article)
-                self.logger.info(f"  ✓ Found: {article.title[:50]}...")
+                self.logger.info(f"Found: {article.title[:50]}...")
             
             time.sleep(self.config.REQUEST_DELAY)
         
