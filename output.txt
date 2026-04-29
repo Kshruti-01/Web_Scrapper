@@ -1,22 +1,29 @@
 (venv) PS C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper> python main.py 
-Traceback (most recent call last):
-  File "C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper\main.py", line 12, in <module>
-    from src import MROScraper, ensure_export_dir
-  File "C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper\src\__init__.py", line 6, in <module>
-    from src.models import Article, ScraperConfig
-  File "C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper\src\models.py", line 9
-    from config.settings import KEYWORDS, USER_AGENT, REQUEST_TIMEOUT,
-                                                                       ^
-SyntaxError: trailing comma not allowed without surrounding parentheses
+============================================================
+AVIATION MRO WEB SCRAPER
+============================================================
 
+Starting scrape of 3 sites...
+2026-04-29 21:42:41,757 - INFO - Scraping: https://mrobusinesstoday.com/
+2026-04-29 21:42:46,034 - WARNING - Attempt 1 failed for https://mrobusinesstoday.com/: 403 Client Error: Forbidden for url: https://mrobusinesstoday.com/
+2026-04-29 21:42:49,261 - WARNING - Attempt 2 failed for https://mrobusinesstoday.com/: 403 Client Error: Forbidden for url: https://mrobusinesstoday.com/
+2026-04-29 21:42:54,500 - WARNING - Attempt 3 failed for https://mrobusinesstoday.com/: 403 Client Error: Forbidden for url: https://mrobusinesstoday.com/
+2026-04-29 21:42:54,500 - ERROR - Failed to fetch https://mrobusinesstoday.com/ after 3 attempts
+2026-04-29 21:42:54,504 - INFO - Completed https://mrobusinesstoday.com/: 0 articles found
+2026-04-29 21:42:58,508 - INFO - Scraping: https://www.ainonline.com/channel/maintenance
+2026-04-29 21:42:59,434 - WARNING - robots.txt disallows: https://www.ainonline.com/channel/maintenance
+2026-04-29 21:42:59,434 - INFO - Completed https://www.ainonline.com/channel/maintenance: 0 articles found
+2026-04-29 21:43:03,435 - INFO - Scraping: https://www.aviationbusinessnews.com/mro/latest-news-mro/
+2026-04-29 21:43:04,785 - WARNING - robots.txt disallows: https://www.aviationbusinessnews.com/mro/latest-news-mro/
+2026-04-29 21:43:04,785 - INFO - Completed https://www.aviationbusinessnews.com/mro/latest-news-mro/: 0 articles found
 
-(venv) PS C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper> python main.py
-Traceback (most recent call last):
-  File "C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper\main.py", line 12, in <module>
-    from src import MROScraper, ensure_export_dir
-  File "C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper\src\__init__.py", line 6, in <module>
-    from src.models import Article, ScraperConfig
-  File "C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper\src\models.py", line 9
-    from config.settings import KEYWORDS, USER_AGENT, REQUEST_TIMEOUT,
-                                                                       ^
-SyntaxError: trailing comma not allowed without surrounding parentheses
+Found 0 relevant articles
+
+No articles found matching the keywords.
+ Websites may have blocked the scraper
+ No recent articles contain the target keywords
+ Check logs/ folder for detailed error messages
+
+============================================================
+Scraping completed!
+============================================================
