@@ -10,7 +10,11 @@ from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
 
 from src.models import ScraperConfig, Article
-from src.utils import setup_logging, compile_keyword_pattern, check_robots
+from src.utils import (
+    setup_logging,
+    compile_keyword_pattern,
+    check_robots
+)
 from config.settings import MAX_ARTICLES_PER_SITE
 
 
@@ -69,7 +73,9 @@ class MROScraper:
                 href = element.get('href')
                 if href:
                     full_url = urljoin(base_url, href)
-                    if any(pattern in full_url.lower() for pattern in ['/news/', '/article/', '/202', '/mro-']):
+                    if any(pattern in full_url.lower() for pattern in [
+                        '/news/', '/article/', '/202', '/mro-'
+                    ]):
                         links.add(full_url)
         
         # Fallback: find all links that look like articles
@@ -77,7 +83,9 @@ class MROScraper:
             for a in soup.find_all('a', href=True):
                 href = a['href']
                 full_url = urljoin(base_url, href)
-                if any(p in full_url.lower() for p in ['/news/', '/article/', '/2024/', '/2025/', '/mro-']):
+                if any(p in full_url.lower() for p in [
+                    '/news/', '/article/', '/2024/', '/2025/', '/mro-'
+                ]):
                     links.add(full_url)
         
         return list(links)[:MAX_ARTICLES_PER_SITE * 2]
@@ -88,7 +96,10 @@ class MROScraper:
         
         # Extract title
         title = None
-        for selector in ['h1', '.article-title', '.entry-title', '.post-title', '[property="og:title"]']:
+        for selector in [
+            'h1', '.article-title', '.entry-title', 
+            '.post-title', '[property="og:title"]'
+        ]:
             elem = soup.select_one(selector)
             if elem:
                 if selector == '[property="og:title"]':
@@ -104,7 +115,10 @@ class MROScraper:
         
         # Extract date
         pub_date = None
-        for selector in ['time[datetime]', '[property="article:published_time"]', '.date', '.published']:
+        for selector in [
+            'time[datetime]', '[property="article:published_time"]', 
+            '.date', '.published'
+        ]:
             elem = soup.select_one(selector)
             if elem:
                 pub_date = elem.get('datetime') or elem.get('content') or elem.get_text(strip=True)
@@ -113,10 +127,15 @@ class MROScraper:
         
         # Extract content text
         full_text = ""
-        for selector in ['article', '.article-content', '.entry-content', '.post-content', 'main']:
+        for selector in [
+            'article', '.article-content', '.entry-content', 
+            '.post-content', 'main'
+        ]:
             content_elem = soup.select_one(selector)
             if content_elem:
-                for tag in content_elem(['script', 'style', 'nav', 'header', 'footer', 'aside']):
+                for tag in content_elem([
+                    'script', 'style', 'nav', 'header', 'footer', 'aside'
+                ]):
                     tag.decompose()
                 full_text = content_elem.get_text(separator=' ', strip=True)
                 break
@@ -172,7 +191,7 @@ class MROScraper:
             article = self._extract_article_content(url, article_soup)
             if article:
                 articles.append(article)
-                self.logger.info(f"  ✓ Found: {article.title[:50]}...")
+                self.logger.info(f"Found: {article.title[:50]}...")
             
             time.sleep(self.config.REQUEST_DELAY)
         
