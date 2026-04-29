@@ -172,7 +172,7 @@ class MROScraper:
             article = self._extract_article_content(url, article_soup)
             if article:
                 articles.append(article)
-                self.logger.info(f"Found: {article.title[:50]}...")
+                self.logger.info(f"  ✓ Found: {article.title[:50]}...")
             
             time.sleep(self.config.REQUEST_DELAY)
         
