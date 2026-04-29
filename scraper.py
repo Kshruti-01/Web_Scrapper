@@ -1,10 +1,11 @@
 """
 Core scraper class for MRO Web Scraper
-Handles all fetching, parsing, and article extraction logic
+Enhanced with anti-blocking measures: rotating user agents, headers, and delays
 """
 
 import requests
 import time
+import random
 from typing import List, Optional
 from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
@@ -18,29 +19,87 @@ from src.utils import (
 from config.settings import MAX_ARTICLES_PER_SITE
 
 
+# List of real browser user agents to rotate
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/121.0",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+]
+
+
 class MROScraper:
-    """Main scraper class with robots.txt compliance and error handling"""
+    """Main scraper class with anti-blocking measures"""
     
     def __init__(self, config: ScraperConfig = None):
         self.config = config or ScraperConfig()
         self.session = requests.Session()
-        self.session.headers.update({'User-Agent': self.config.USER_AGENT})
         self.logger = setup_logging()
         self.keyword_pattern = compile_keyword_pattern(self.config.KEYWORDS)
+        self._update_session_headers()
     
-    def _fetch_page(self, url: str) -> Optional[BeautifulSoup]:
-        """Fetch page content with retry logic"""
-        if not check_robots(url, self.config.USER_AGENT, self.config.ROBOTS_CACHE):
-            self.logger.warning(f"robots.txt disallows: {url}")
-            return None
+    def _update_session_headers(self):
+        """Update session with random user agent and browser-like headers"""
+        user_agent = random.choice(USER_AGENTS)
+        self.session.headers.update({
+            'User-Agent': user_agent,
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'DNT': '1',
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1',
+            'Sec-Fetch-Dest': 'document',
+            'Sec-Fetch-Mode': 'navigate',
+            'Sec-Fetch-Site': 'none',
+            'Sec-Fetch-User': '?1',
+            'Cache-Control': 'max-age=0',
+        })
+    
+    def _fetch_page(self, url: str, ignore_robots: bool = False) -> Optional[BeautifulSoup]:
+        """Fetch page content with retry logic and anti-block measures"""
+        
+        # Check robots.txt (unless we're ignoring it for blocked sites)
+        if not ignore_robots:
+            if not check_robots(url, self.session.headers['User-Agent'], self.config.ROBOTS_CACHE):
+                self.logger.warning(f"robots.txt disallows: {url}")
+                return None
         
         for attempt in range(self.config.MAX_RETRIES):
             try:
+                # Rotate user agent on each retry
+                self._update_session_headers()
+                
+                # Add random delay to seem more human
+                time.sleep(random.uniform(1, 3))
+                
                 response = self.session.get(
                     url, 
                     timeout=self.config.REQUEST_TIMEOUT,
-                    allow_redirects=True
+                    allow_redirects=True,
+                    headers={
+                        'Referer': 'https://www.google.com/',
+                    }
                 )
+                
+                # Handle common blocks
+                if response.status_code == 403:
+                    self.logger.warning(f"Got 403 Forbidden, trying to bypass...")
+                    # Try with different approach
+                    response = self.session.get(
+                        url,
+                        timeout=self.config.REQUEST_TIMEOUT,
+                        allow_redirects=True,
+                        headers={
+                            'Referer': 'https://www.bing.com/',
+                            'User-Agent': random.choice(USER_AGENTS),
+                        }
+                    )
+                
+                if response.status_code == 403:
+                    raise requests.exceptions.HTTPError("403 Forbidden - Blocked by website")
+                
                 response.raise_for_status()
                 
                 # Check for paywall/cookie wall indicators
@@ -53,7 +112,8 @@ class MROScraper:
             except requests.exceptions.RequestException as e:
                 self.logger.warning(f"Attempt {attempt + 1} failed for {url}: {e}")
                 if attempt < self.config.MAX_RETRIES - 1:
-                    time.sleep(self.config.REQUEST_DELAY * (attempt + 1))
+                    wait_time = self.config.REQUEST_DELAY * (attempt + 1) * random.uniform(1, 2)
+                    time.sleep(wait_time)
                     
         self.logger.error(f"Failed to fetch {url} after {self.config.MAX_RETRIES} attempts")
         return None
@@ -65,7 +125,8 @@ class MROScraper:
         selectors = [
             'article a', '.article a', '.post a', '.entry-title a',
             'h2 a', 'h3 a', 'h4 a', '.headline a', '.title a',
-            '[class*="article"] a', '[class*="post"] a', '[class*="news"] a'
+            '[class*="article"] a', '[class*="post"] a', '[class*="news"] a',
+            'a[href*="article"]', 'a[href*="news"]', 'a[href*="202"]',
         ]
         
         for selector in selectors:
@@ -73,8 +134,10 @@ class MROScraper:
                 href = element.get('href')
                 if href:
                     full_url = urljoin(base_url, href)
+                    # Filter only article-like URLs
                     if any(pattern in full_url.lower() for pattern in [
-                        '/news/', '/article/', '/202', '/mro-'
+                        '/news/', '/article/', '/2024/', '/2025/', '/2026/',
+                        '/mro-', '/maintenance', '/aviation'
                     ]):
                         links.add(full_url)
         
@@ -84,7 +147,8 @@ class MROScraper:
                 href = a['href']
                 full_url = urljoin(base_url, href)
                 if any(p in full_url.lower() for p in [
-                    '/news/', '/article/', '/2024/', '/2025/', '/mro-'
+                    '/news/', '/article/', '/2024/', '/2025/', '/2026/',
+                    '/mro-', '/maintenance'
                 ]):
                     links.add(full_url)
         
@@ -169,12 +233,12 @@ class MROScraper:
             matched_keywords=matched_keywords
         )
     
-    def scrape_site(self, base_url: str) -> List[Article]:
+    def scrape_site(self, base_url: str, ignore_robots: bool = False) -> List[Article]:
         """Scrape a single site for relevant articles"""
         articles = []
         self.logger.info(f"Scraping: {base_url}")
         
-        soup = self._fetch_page(base_url)
+        soup = self._fetch_page(base_url, ignore_robots=ignore_robots)
         if not soup:
             return articles
         
@@ -184,7 +248,7 @@ class MROScraper:
         for url in article_urls[:MAX_ARTICLES_PER_SITE]:
             self.logger.info(f"Processing: {url}")
             
-            article_soup = self._fetch_page(url)
+            article_soup = self._fetch_page(url, ignore_robots=ignore_robots)
             if not article_soup:
                 continue
             
@@ -193,22 +257,25 @@ class MROScraper:
                 articles.append(article)
                 self.logger.info(f"Found: {article.title[:50]}...")
             
-            time.sleep(self.config.REQUEST_DELAY)
+            time.sleep(random.uniform(2, 4))
         
         return articles
     
-    def scrape_all(self, urls: List[str]) -> List[Article]:
+    def scrape_all(self, urls: List[str], force_ignore_robots: bool = False) -> List[Article]:
         """Scrape multiple sites and return all relevant articles"""
         all_articles = []
         
         for url in urls:
             try:
-                articles = self.scrape_site(url)
+                # Determine if we should ignore robots.txt
+                ignore_robots = force_ignore_robots
+                
+                articles = self.scrape_site(url, ignore_robots=ignore_robots)
                 all_articles.extend(articles)
                 self.logger.info(f"Completed {url}: {len(articles)} articles found")
             except Exception as e:
                 self.logger.error(f"Error scraping {url}: {e}")
             
-            time.sleep(self.config.REQUEST_DELAY * 2)
+            time.sleep(random.uniform(3, 6))
         
         return all_articles
