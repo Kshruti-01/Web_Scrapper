@@ -1,14 +1,18 @@
 """
 Core scraper class for MRO Web Scraper
-Enhanced with anti-blocking measures: rotating user agents, headers, and delays
+Enhanced with anti-blocking measures and SSL error handling
 """
 
 import requests
 import time
 import random
+import urllib3
 from typing import List, Optional
 from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup
+
+# Disable SSL warnings for sites with certificate issues
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 from src.models import ScraperConfig, Article
 from src.utils import (
@@ -30,7 +34,7 @@ USER_AGENTS = [
 
 
 class MROScraper:
-    """Main scraper class with anti-blocking measures"""
+    """Main scraper class with anti-blocking and SSL error handling"""
     
     def __init__(self, config: ScraperConfig = None):
         self.config = config or ScraperConfig()
@@ -58,7 +62,7 @@ class MROScraper:
         })
     
     def _fetch_page(self, url: str, ignore_robots: bool = False) -> Optional[BeautifulSoup]:
-        """Fetch page content with retry logic and anti-block measures"""
+        """Fetch page content with retry logic, SSL handling, and anti-block measures"""
         
         # Check robots.txt (unless we're ignoring it for blocked sites)
         if not ignore_robots:
@@ -78,6 +82,7 @@ class MROScraper:
                     url, 
                     timeout=self.config.REQUEST_TIMEOUT,
                     allow_redirects=True,
+                    verify=False,  # Skip SSL verification for problematic sites
                     headers={
                         'Referer': 'https://www.google.com/',
                     }
@@ -87,10 +92,12 @@ class MROScraper:
                 if response.status_code == 403:
                     self.logger.warning(f"Got 403 Forbidden, trying to bypass...")
                     # Try with different approach
+                    time.sleep(random.uniform(2, 4))
                     response = self.session.get(
                         url,
                         timeout=self.config.REQUEST_TIMEOUT,
                         allow_redirects=True,
+                        verify=False,
                         headers={
                             'Referer': 'https://www.bing.com/',
                             'User-Agent': random.choice(USER_AGENTS),
@@ -98,7 +105,8 @@ class MROScraper:
                     )
                 
                 if response.status_code == 403:
-                    raise requests.exceptions.HTTPError("403 Forbidden - Blocked by website")
+                    self.logger.warning(f"Still blocked after bypass attempt")
+                    return None
                 
                 response.raise_for_status()
                 
@@ -109,6 +117,13 @@ class MROScraper:
                 
                 return BeautifulSoup(response.content, 'html.parser')
                 
+            except requests.exceptions.SSLError as ssl_err:
+                self.logger.warning(f"SSL Error on attempt {attempt + 1}, retrying with different approach...")
+                # Try with different SSL context
+                if attempt < self.config.MAX_RETRIES - 1:
+                    time.sleep(random.uniform(3, 5))
+                    continue
+                    
             except requests.exceptions.RequestException as e:
                 self.logger.warning(f"Attempt {attempt + 1} failed for {url}: {e}")
                 if attempt < self.config.MAX_RETRIES - 1:
@@ -240,6 +255,7 @@ class MROScraper:
         
         soup = self._fetch_page(base_url, ignore_robots=ignore_robots)
         if not soup:
+            self.logger.warning(f"Could not access {base_url}")
             return articles
         
         article_urls = self._extract_article_links(soup, base_url)
@@ -250,12 +266,13 @@ class MROScraper:
             
             article_soup = self._fetch_page(url, ignore_robots=ignore_robots)
             if not article_soup:
+                self.logger.warning(f"Could not access article: {url}")
                 continue
             
             article = self._extract_article_content(url, article_soup)
             if article:
                 articles.append(article)
-                self.logger.info(f"Found: {article.title[:50]}...")
+                self.logger.info(f"Found: {article.title[:80]}...")
             
             time.sleep(random.uniform(2, 4))
         
@@ -267,10 +284,7 @@ class MROScraper:
         
         for url in urls:
             try:
-                # Determine if we should ignore robots.txt
-                ignore_robots = force_ignore_robots
-                
-                articles = self.scrape_site(url, ignore_robots=ignore_robots)
+                articles = self.scrape_site(url, ignore_robots=force_ignore_robots)
                 all_articles.extend(articles)
                 self.logger.info(f"Completed {url}: {len(articles)} articles found")
             except Exception as e:
