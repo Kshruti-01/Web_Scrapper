@@ -6,7 +6,13 @@ Defines structured containers for configuration and scraped articles
 from dataclasses import dataclass, field, asdict
 from typing import List, Dict, Optional
 from datetime import datetime
-from config.settings import KEYWORDS, USER_AGENT, REQUEST_TIMEOUT, REQUEST_DELAY, MAX_RETRIES
+from config.settings import (
+    KEYWORDS,
+    USER_AGENT,
+    REQUEST_TIMEOUT,
+    REQUEST_DELAY,
+    MAX_RETRIES
+)
 
 
 @dataclass
