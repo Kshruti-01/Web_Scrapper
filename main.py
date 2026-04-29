@@ -80,4 +80,44 @@ def main():
     print(f"\nFound {len(articles)} relevant articles")
     
     if articles:
-        csv_file, json_file = export_data(articles, export
+        csv_file, json_file = export_data(articles, export_dir)
+        
+        # Generate and display statistics
+        stats = generate_stats(articles)
+        
+        print("\n" + "=" * 60)
+        print("ANALYTICAL SUMMARY")
+        print("=" * 60)
+        print(f"\n Total Articles: {stats['total_articles']}")
+        
+        print("\n Articles by Domain:")
+        for domain, count in stats['by_domain'].items():
+            print(f" {domain}: {count}")
+        
+        print("\n Top Keywords Found:")
+        for kw, freq in list(stats['keyword_frequency'].items())[:10]:
+            print(f" {kw}: {freq} occurrences")
+        
+        print(f"\n Data exported to:")
+        print(f" CSV: {csv_file}")
+        print(f" JSON: {json_file}")
+        
+        # Display first few article titles as preview
+        print("\n Article Preview (first 5):")
+        for i, article in enumerate(articles[:5], 1):
+            print(f"{i}. [{article.source_domain}] {article.title[:80]}...")
+            print(f" Keywords: {', '.join(article.matched_keywords[:5])}")
+    
+    else:
+        print("\nNo articles found matching the keywords.")
+        print(" Websites may have blocked the scraper")
+        print(" No recent articles contain the target keywords")
+        print(" Check logs/ folder for detailed error messages")
+    
+    print("\n" + "=" * 60)
+    print("Scraping completed!")
+    print("=" * 60)
+
+
+if __name__ == "__main__":
+    main()
