@@ -117,3 +117,43 @@ Article Preview (first 5):
 ============================================================
 Scraping completed!
 ============================================================
+
+
+
+
+============================================================
+AVIATION MRO WEB SCRAPER
+============================================================
+
+ Starting scrape of 3 sites...
+Note: Some sites block scrapers. Using enhanced bypass methods
+
+2026-04-30 14:18:37,737 - INFO - Scraping: https://mrobusinesstoday.com/
+2026-04-30 14:18:41,420 - WARNING - Got 403 Forbidden on attempt 1
+2026-04-30 14:18:48,858 - WARNING - Got 403 Forbidden on attempt 2
+2026-04-30 14:18:57,359 - WARNING - Got 403 Forbidden on attempt 3
+2026-04-30 14:18:57,359 - WARNING - Could not access https://mrobusinesstoday.com/
+2026-04-30 14:18:57,359 - INFO - Completed https://mrobusinesstoday.com/: 0 articles
+2026-04-30 14:19:01,155 - INFO - Scraping: https://www.ainonline.com/channel/maintenance
+Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
+2026-04-30 14:19:04,080 - INFO - No links with standard selectors, using fallback method
+2026-04-30 14:19:04,080 - INFO - Found 0 potential article links
+2026-04-30 14:19:04,081 - INFO - Completed https://www.ainonline.com/channel/maintenance: 0 articles
+2026-04-30 14:19:07,191 - INFO - Scraping: https://www.aviationbusinessnews.com/mro/latest-news-mro/
+Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
+2026-04-30 14:19:10,125 - INFO - No links with standard selectors, using fallback method
+2026-04-30 14:19:10,125 - INFO - Found 0 potential article links
+2026-04-30 14:19:10,126 - INFO - Completed https://www.aviationbusinessnews.com/mro/latest-news-mro/: 0 articles
+
+ Found 0 relevant articles
+
+ No articles found matching the keywords.
+ Websites are heavily blocking automated access
+ Consider using official APIs or RSS feeds instead
+ Check logs/ folder for detailed error messages
+
+  Suggestion: Use NewsAPI or RSS feeds for these sources
+
+============================================================
+Scraping completed!
+============================================================
