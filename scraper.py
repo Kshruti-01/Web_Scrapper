@@ -1,6 +1,6 @@
 """
 Core scraper class for MRO Web Scraper
-Enhanced with anti-blocking measures and SSL error handling
+Enhanced with site-specific extraction logic and proper encoding handling
 """
 
 import requests
@@ -23,7 +23,6 @@ from src.utils import (
 from config.settings import MAX_ARTICLES_PER_SITE
 
 
-# List of real browser user agents to rotate
 USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
@@ -34,7 +33,7 @@ USER_AGENTS = [
 
 
 class MROScraper:
-    """Main scraper class with anti-blocking and SSL error handling"""
+    """Main scraper class with site-specific extraction and anti-blocking"""
     
     def __init__(self, config: ScraperConfig = None):
         self.config = config or ScraperConfig()
@@ -64,7 +63,6 @@ class MROScraper:
     def _fetch_page(self, url: str, ignore_robots: bool = False) -> Optional[BeautifulSoup]:
         """Fetch page content with retry logic, SSL handling, and anti-block measures"""
         
-        # Check robots.txt (unless we're ignoring it for blocked sites)
         if not ignore_robots:
             if not check_robots(url, self.session.headers['User-Agent'], self.config.ROBOTS_CACHE):
                 self.logger.warning(f"robots.txt disallows: {url}")
@@ -72,100 +70,107 @@ class MROScraper:
         
         for attempt in range(self.config.MAX_RETRIES):
             try:
-                # Rotate user agent on each retry
                 self._update_session_headers()
-                
-                # Add random delay to seem more human
                 time.sleep(random.uniform(1, 3))
                 
                 response = self.session.get(
                     url, 
                     timeout=self.config.REQUEST_TIMEOUT,
                     allow_redirects=True,
-                    verify=False,  # Skip SSL verification for problematic sites
-                    headers={
-                        'Referer': 'https://www.google.com/',
-                    }
+                    verify=False,
                 )
                 
-                # Handle common blocks
-                if response.status_code == 403:
-                    self.logger.warning(f"Got 403 Forbidden, trying to bypass...")
-                    # Try with different approach
-                    time.sleep(random.uniform(2, 4))
-                    response = self.session.get(
-                        url,
-                        timeout=self.config.REQUEST_TIMEOUT,
-                        allow_redirects=True,
-                        verify=False,
-                        headers={
-                            'Referer': 'https://www.bing.com/',
-                            'User-Agent': random.choice(USER_AGENTS),
-                        }
-                    )
+                # Force proper encoding
+                response.encoding = response.apparent_encoding or 'utf-8'
                 
                 if response.status_code == 403:
-                    self.logger.warning(f"Still blocked after bypass attempt")
-                    return None
+                    self.logger.warning(f"Got 403 Forbidden on attempt {attempt + 1}")
+                    if attempt < self.config.MAX_RETRIES - 1:
+                        time.sleep(random.uniform(3, 5))
+                        continue
+                    else:
+                        return None
                 
                 response.raise_for_status()
                 
-                # Check for paywall/cookie wall indicators
                 if "subscribe" in response.url.lower() or "paywall" in response.text.lower()[:1000]:
                     self.logger.warning(f"Possible paywall detected at {url}")
                     return None
                 
-                return BeautifulSoup(response.content, 'html.parser')
+                return BeautifulSoup(response.content, 'html.parser', from_encoding='utf-8')
                 
-            except requests.exceptions.SSLError as ssl_err:
-                self.logger.warning(f"SSL Error on attempt {attempt + 1}, retrying with different approach...")
-                # Try with different SSL context
+            except requests.exceptions.SSLError:
+                self.logger.warning(f"SSL Error on attempt {attempt + 1}")
                 if attempt < self.config.MAX_RETRIES - 1:
                     time.sleep(random.uniform(3, 5))
                     continue
                     
             except requests.exceptions.RequestException as e:
-                self.logger.warning(f"Attempt {attempt + 1} failed for {url}: {e}")
+                self.logger.warning(f"Attempt {attempt + 1} failed: {str(e)[:100]}")
                 if attempt < self.config.MAX_RETRIES - 1:
                     wait_time = self.config.REQUEST_DELAY * (attempt + 1) * random.uniform(1, 2)
                     time.sleep(wait_time)
                     
-        self.logger.error(f"Failed to fetch {url} after {self.config.MAX_RETRIES} attempts")
+        self.logger.error(f"Failed to fetch {url}")
         return None
     
-    def _extract_article_links(self, soup: BeautifulSoup, base_url: str) -> List[str]:
-        """Extract article links from listing pages"""
+    def _extract_all_links_from_page(self, soup: BeautifulSoup, base_url: str, domain: str) -> List[str]:
+        """Extract ALL links from page as fallback method"""
         links = set()
         
-        selectors = [
-            'article a', '.article a', '.post a', '.entry-title a',
-            'h2 a', 'h3 a', 'h4 a', '.headline a', '.title a',
-            '[class*="article"] a', '[class*="post"] a', '[class*="news"] a',
-            'a[href*="article"]', 'a[href*="news"]', 'a[href*="202"]',
-        ]
+        # Get all anchor tags
+        for a in soup.find_all('a', href=True):
+            href = a['href']
+            full_url = urljoin(base_url, href)
+            
+            # Only keep links from same domain
+            if domain in full_url:
+                # Filter for article-like URLs
+                if any(pattern in full_url.lower() for pattern in [
+                    '/2024/', '/2025/', '/2026/', '/news/', '/article/',
+                    '/mro/', '/maintenance/', '/aviation/', '/aircraft/',
+                    '/engine/', '/repair/', '/overhaul/'
+                ]):
+                    links.add(full_url)
         
-        for selector in selectors:
-            for element in soup.select(selector):
-                href = element.get('href')
-                if href:
-                    full_url = urljoin(base_url, href)
-                    # Filter only article-like URLs
-                    if any(pattern in full_url.lower() for pattern in [
-                        '/news/', '/article/', '/2024/', '/2025/', '/2026/',
-                        '/mro-', '/maintenance', '/aviation'
-                    ]):
-                        links.add(full_url)
-        
-        # Fallback: find all links that look like articles
+        # If no article-specific links, get all internal links as fallback
         if not links:
             for a in soup.find_all('a', href=True):
                 href = a['href']
                 full_url = urljoin(base_url, href)
-                if any(p in full_url.lower() for p in [
-                    '/news/', '/article/', '/2024/', '/2025/', '/2026/',
-                    '/mro-', '/maintenance'
-                ]):
+                if domain in full_url and full_url != base_url:
                     links.add(full_url)
+        
+        return list(links)[:MAX_ARTICLES_PER_SITE]
+    
+    def _extract_article_links(self, soup: BeautifulSoup, base_url: str) -> List[str]:
+        """Extract article links with site-specific selectors"""
+        domain = urlparse(base_url).netloc.replace('www.', '')
+        links = set()
+        
+        # Universal selectors that work on most news sites
+        universal_selectors = [
+            'article a', 'a[href*="/202"]', 'a[href*="/news/"]',
+            'a[href*="/article/"]', '.entry-title a', '.post-title a',
+            'h2 a', 'h3 a', '.headline a', '[class*="title"] a',
+            'main a', '.content a', '#content a'
+        ]
+        
+        for selector in universal_selectors:
+            try:
+                for element in soup.select(selector):
+                    href = element.get('href')
+                    if href:
+                        full_url = urljoin(base_url, href)
+                        if domain in full_url and full_url != base_url:
+                            links.add(full_url)
+            except:
+                continue
+        
+        # If universal selectors find nothing, use fallback
+        if not links:
+            self.logger.info(f"No links with standard selectors, using fallback method")
+            links = set(self._extract_all_links_from_page(soup, base_url, domain))
         
         return list(links)[:MAX_ARTICLES_PER_SITE * 2]
     
@@ -173,59 +178,78 @@ class MROScraper:
         """Extract structured article data from page"""
         domain = urlparse(url).netloc.replace('www.', '')
         
-        # Extract title
+        # Extract title - try multiple methods
         title = None
-        for selector in [
-            'h1', '.article-title', '.entry-title', 
-            '.post-title', '[property="og:title"]'
-        ]:
+        
+        # Method 1: Common title selectors
+        for selector in ['h1', '.article-title', '.entry-title', '.post-title', 
+                        '[property="og:title"]', '.page-title', '.story-title']:
             elem = soup.select_one(selector)
             if elem:
                 if selector == '[property="og:title"]':
                     title = elem.get('content', '').strip()
                 else:
                     title = elem.get_text(strip=True)
-                if title:
+                if title and len(title) > 5:
                     break
         
+        # Method 2: First H1
         if not title:
-            title_elem = soup.find('h1') or soup.find('title')
-            title = title_elem.get_text(strip=True) if title_elem else "Untitled"
+            h1 = soup.find('h1')
+            if h1:
+                title = h1.get_text(strip=True)
+        
+        # Method 3: Title tag
+        if not title:
+            title_tag = soup.find('title')
+            if title_tag:
+                title = title_tag.get_text(strip=True)
+        
+        if not title or title == "Untitled":
+            title = f"Article from {domain}"
         
         # Extract date
         pub_date = None
-        for selector in [
-            'time[datetime]', '[property="article:published_time"]', 
-            '.date', '.published'
-        ]:
+        for selector in ['time[datetime]', '[property="article:published_time"]', 
+                        '.date', '.published', '.post-date', 'time']:
             elem = soup.select_one(selector)
             if elem:
                 pub_date = elem.get('datetime') or elem.get('content') or elem.get_text(strip=True)
                 if pub_date:
                     break
         
-        # Extract content text
+        # Extract content text - get ALL text from body
         full_text = ""
-        for selector in [
-            'article', '.article-content', '.entry-content', 
-            '.post-content', 'main'
-        ]:
+        
+        # Try article-specific containers first
+        for selector in ['article', '.article-content', '.entry-content', 
+                        '.post-content', 'main', '#content', '.content']:
             content_elem = soup.select_one(selector)
             if content_elem:
-                for tag in content_elem([
-                    'script', 'style', 'nav', 'header', 'footer', 'aside'
-                ]):
+                # Remove unwanted elements
+                for tag in content_elem(['script', 'style', 'nav', 'header', 
+                                        'footer', 'aside', 'iframe', 'noscript']):
                     tag.decompose()
                 full_text = content_elem.get_text(separator=' ', strip=True)
-                break
+                if len(full_text) > 100:
+                    break
         
-        if not full_text:
+        # If still no content, get all paragraph text
+        if len(full_text) < 100:
             paragraphs = soup.find_all('p')
-            full_text = ' '.join(p.get_text(strip=True) for p in paragraphs)
+            full_text = ' '.join(p.get_text(strip=True) for p in paragraphs if len(p.get_text(strip=True)) > 20)
+        
+        # Last resort: get all body text
+        if len(full_text) < 50:
+            body = soup.find('body')
+            if body:
+                for tag in body(['script', 'style', 'nav', 'header', 'footer', 'aside']):
+                    tag.decompose()
+                full_text = body.get_text(separator=' ', strip=True)[:5000]
         
         # Extract summary
         meta_desc = soup.select_one('[name="description"]')
-        if meta_desc:
+        if meta_desc and meta_desc.get('content'):
             summary = meta_desc.get('content', '')
         else:
             summary = full_text[:300] + '...' if len(full_text) > 300 else full_text
@@ -240,10 +264,10 @@ class MROScraper:
         
         return Article(
             url=url,
-            title=title,
+            title=title[:200],
             source_domain=domain,
             publication_date=pub_date,
-            summary=summary,
+            summary=summary[:500],
             full_text=full_text[:5000],
             matched_keywords=matched_keywords
         )
@@ -262,17 +286,19 @@ class MROScraper:
         self.logger.info(f"Found {len(article_urls)} potential article links")
         
         for url in article_urls[:MAX_ARTICLES_PER_SITE]:
-            self.logger.info(f"Processing: {url}")
+            self.logger.info(f"Processing: {url[:100]}...")
             
             article_soup = self._fetch_page(url, ignore_robots=ignore_robots)
             if not article_soup:
-                self.logger.warning(f"Could not access article: {url}")
+                self.logger.warning(f"Could not access article")
                 continue
             
             article = self._extract_article_content(url, article_soup)
             if article:
                 articles.append(article)
-                self.logger.info(f"Found: {article.title[:80]}...")
+                self.logger.info(f" Found: {article.title[:80]}...")
+            else:
+                self.logger.info(f" No MRO keywords found")
             
             time.sleep(random.uniform(2, 4))
         
@@ -286,9 +312,9 @@ class MROScraper:
             try:
                 articles = self.scrape_site(url, ignore_robots=force_ignore_robots)
                 all_articles.extend(articles)
-                self.logger.info(f"Completed {url}: {len(articles)} articles found")
+                self.logger.info(f"Completed {url}: {len(articles)} articles")
             except Exception as e:
-                self.logger.error(f"Error scraping {url}: {e}")
+                self.logger.error(f"Error scraping {url}: {str(e)[:100]}")
             
             time.sleep(random.uniform(3, 6))
         
