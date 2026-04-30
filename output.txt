@@ -59,3 +59,61 @@ Article Preview (first 5):
 ============================================================
 Scraping completed!
 ============================================================
+
+
+
+
+============================================================
+AVIATION MRO WEB SCRAPER
+============================================================
+
+ Starting scrape of 3 sites...
+Note: Some sites block scrapers. Using enhanced bypass methods
+
+2026-04-30 14:07:00,081 - INFO - Scraping: https://mrobusinesstoday.com/
+2026-04-30 14:07:03,933 - WARNING - Got 403 Forbidden, trying to bypass...
+2026-04-30 14:07:08,975 - INFO - Found 3 potential article links
+2026-04-30 14:07:08,975 - INFO - Processing: https://mrobusinesstoday.com/mro-innovation-of-the-month/
+2026-04-30 14:07:12,141 - WARNING - Got 403 Forbidden, trying to bypass...
+2026-04-30 14:07:16,209 - WARNING - Still blocked after bypass attempt
+2026-04-30 14:07:16,210 - WARNING - Could not access article: https://mrobusinesstoday.com/mro-innovation-of-the-month/
+2026-04-30 14:07:16,210 - INFO - Processing: https://mrobusinesstoday.com/mro-of-the-month/ 
+2026-04-30 14:07:21,585 - INFO - Found: Category - MRO of the month...
+2026-04-30 14:07:25,404 - INFO - Processing: https://mrobusinesstoday.com/mag/2026/15-apr-2026/
+2026-04-30 14:07:31,009 - WARNING - Got 403 Forbidden, trying to bypass...
+2026-04-30 14:07:37,400 - INFO - Completed https://mrobusinesstoday.com/: 1 articles found
+2026-04-30 14:07:42,907 - INFO - Scraping: https://www.ainonline.com/channel/maintenance
+Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
+2026-04-30 14:07:48,862 - INFO - Found 0 potential article links
+2026-04-30 14:07:48,862 - INFO - Completed https://www.ainonline.com/channel/maintenance: 0 articles found
+2026-04-30 14:07:51,903 - INFO - Scraping: https://www.aviationbusinessnews.com/mro/latest-news-mro/
+Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
+2026-04-30 14:07:56,033 - INFO - Found 0 potential article links
+2026-04-30 14:07:56,033 - INFO - Completed https://www.aviationbusinessnews.com/mro/latest-news-mro/: 0 articles found
+
+ Found 1 relevant articles
+
+============================================================
+ANALYTICAL SUMMARY
+============================================================
+
+ Total Articles: 1
+
+ Articles by Domain:
+mrobusinesstoday.com: 1
+
+ Top Keywords Found:
+ maintenance: 1 occurrences
+ mro: 1 occurrences
+
+Data exported to:
+ CSV: data/exports\mro_articles_20260430_140759.csv
+ JSON: data/exports\mro_articles_20260430_140759.json
+
+Article Preview (first 5):
+   1. [mrobusinesstoday.com] Category - MRO of the month...
+ Keywords: Maintenance, MRO
+
+============================================================
+Scraping completed!
+============================================================
