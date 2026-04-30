@@ -119,41 +119,114 @@ Scraping completed!
 ============================================================
 
 
-
-
+venv) PS C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper> python main.py
 ============================================================
 AVIATION MRO WEB SCRAPER
 ============================================================
 
- Starting scrape of 3 sites...
-Note: Some sites block scrapers. Using enhanced bypass methods
+ Starting scrape...
+============================================================
 
-2026-04-30 14:18:37,737 - INFO - Scraping: https://mrobusinesstoday.com/
-2026-04-30 14:18:41,420 - WARNING - Got 403 Forbidden on attempt 1
-2026-04-30 14:18:48,858 - WARNING - Got 403 Forbidden on attempt 2
-2026-04-30 14:18:57,359 - WARNING - Got 403 Forbidden on attempt 3
-2026-04-30 14:18:57,359 - WARNING - Could not access https://mrobusinesstoday.com/
-2026-04-30 14:18:57,359 - INFO - Completed https://mrobusinesstoday.com/: 0 articles
-2026-04-30 14:19:01,155 - INFO - Scraping: https://www.ainonline.com/channel/maintenance
+📻 Attempting RSS Feeds (always accessible)...
+2026-04-30 14:28:48,448 - INFO - Fetching RSS: https://news.google.com/rss/search?q=MRO+maintenance+repair+overhaul+aviation&hl=en-US&gl=US&ceid=US:en
+2026-04-30 14:28:49,165 - ERROR - Failed to fetch RSS feed https://news.google.com/rss/search?q=MRO+maintenance+repair+overhaul+aviation&hl=en-US&gl=US&ceid=US:en: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=MRO+maintenance+repair+overhaul+aviation&hl=en-US&gl=US&ceid=US:en (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))
+2026-04-30 14:28:49,165 - INFO - Fetching RSS: https://news.google.com/rss/search?q=aircraft+engine+service+agreement+contract&hl=en-US&gl=US&ceid=US:en
+2026-04-30 14:28:49,731 - ERROR - Failed to fetch RSS feed https://news.google.com/rss/search?q=aircraft+engine+service+agreement+contract&hl=en-US&gl=US&ceid=US:en: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=aircraft+engine+service+agreement+contract&hl=en-US&gl=US&ceid=US:en (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))
+
+ Attempting regular websites...
+2026-04-30 14:28:49,747 - INFO - Scraping: https://mrobusinesstoday.com/
+2026-04-30 14:28:53,049 - WARNING - Got 403 Forbidden on attempt 1
+2026-04-30 14:29:00,627 - WARNING - Got 403 Forbidden on attempt 2
+2026-04-30 14:29:09,043 - INFO - Found 20 potential article links
+2026-04-30 14:29:09,043 - INFO - Processing: https://mrobusinesstoday.com/swiss-elevates-the-korea-europe-experience-with-a350-debut-and-swiss-se...
+2026-04-30 14:29:12,774 - WARNING - Got 403 Forbidden on attempt 1
+2026-04-30 14:29:18,618 - WARNING - Got 403 Forbidden on attempt 2
+2026-04-30 14:29:26,769 - INFO -  Found: SWISS Elevates the Korea–Europe Experience with A350 Debut and ‘SWISS Senses’...
+2026-04-30 14:29:29,125 - INFO - Processing: https://mrobusinesstoday.com/latam-airlines-taps-rolls-royce-to-power-boeing-787-fleet-expansion/...
+2026-04-30 14:29:32,898 - WARNING - Got 403 Forbidden on attempt 1
+2026-04-30 14:29:40,215 - WARNING - Got 403 Forbidden on attempt 2
+2026-04-30 14:29:48,152 - INFO -  Found: LATAM Airlines taps Rolls-Royce to power Boeing 787 fleet expansion...
+2026-04-30 14:29:51,800 - INFO - Processing: https://mrobusinesstoday.com/category/latest-news/feature-stories/...
+2026-04-30 14:29:56,912 - INFO -  Found: Category - Feature...
+2026-04-30 14:30:00,405 - INFO - Processing: https://mrobusinesstoday.com/honeywell-aerospace-unveils-strategic-board-ahead-of-june-2026-spin-off...
+2026-04-30 14:30:03,745 - WARNING - Got 403 Forbidden on attempt 1
+2026-04-30 14:30:11,788 - INFO -  Found: Honeywell Aerospace unveils strategic Board ahead of June 2026 spin-off...
+2026-04-30 14:30:14,705 - INFO - Processing: https://mrobusinesstoday.com/boeing-expands-737-max-footprint-with-everett-north-line-signalling-str...
+2026-04-30 14:30:18,316 - INFO -  Found: Boeing expands 737 MAX footprint with Everett North Line signalling strategic pr...
+2026-04-30 14:30:21,327 - INFO - Processing: https://mrobusinesstoday.com/cabin-mro-comes-of-age-as-regent-aerospace-bets-big-on-kuwait-as-its-mi...
+2026-04-30 14:30:24,497 - INFO -  Found: Cabin MRO comes of age as Regent Aerospace bets big on Kuwait as its Middle East...
+2026-04-30 14:30:27,325 - INFO - Processing: https://mrobusinesstoday.com/aiesl-eyes-global-mro-expansion-through-nagpur-as-india-strengthens-mro...
+2026-04-30 14:30:31,144 - WARNING - Got 403 Forbidden on attempt 1
+2026-04-30 14:30:38,624 - WARNING - Got 403 Forbidden on attempt 2
+2026-04-30 14:30:46,157 - WARNING - Got 403 Forbidden on attempt 3
+2026-04-30 14:30:46,157 - WARNING - Could not access article
+2026-04-30 14:30:46,158 - INFO - Processing: https://mrobusinesstoday.com/latest-news/feature-stories/...
+2026-04-30 14:30:48,960 - WARNING - Got 403 Forbidden on attempt 1
+2026-04-30 14:30:57,537 - WARNING - Got 403 Forbidden on attempt 2
+2026-04-30 14:31:06,035 - WARNING - Got 403 Forbidden on attempt 3
+2026-04-30 14:31:06,036 - WARNING - Could not access article
+2026-04-30 14:31:06,036 - INFO - Processing: https://mrobusinesstoday.com/aiesl-strengthens-structural-repair-capabilities-with-dgca-approval-at-...
+2026-04-30 14:31:09,268 - WARNING - Got 403 Forbidden on attempt 1
+2026-04-30 14:31:16,994 - INFO -  Found: AIESL strengthens structural repair capabilities with DGCA approval at Trivandru...
+2026-04-30 14:31:19,816 - INFO - Processing: https://mrobusinesstoday.com/coltala-aerospace-appoints-phil-bathurst-as-president-to-lead-mro-expan...
+2026-04-30 14:31:25,055 - INFO -  Found: Coltala Aerospace appoints Phil Bathurst as president to lead MRO expansion...
+2026-04-30 14:31:28,201 - INFO - Completed https://mrobusinesstoday.com/: 8 articles
+2026-04-30 14:31:32,796 - INFO - Scraping: https://www.ainonline.com/channel/maintenance
 Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
-2026-04-30 14:19:04,080 - INFO - No links with standard selectors, using fallback method
-2026-04-30 14:19:04,080 - INFO - Found 0 potential article links
-2026-04-30 14:19:04,081 - INFO - Completed https://www.ainonline.com/channel/maintenance: 0 articles
-2026-04-30 14:19:07,191 - INFO - Scraping: https://www.aviationbusinessnews.com/mro/latest-news-mro/
+2026-04-30 14:31:37,314 - INFO - No links with standard selectors, using fallback method
+2026-04-30 14:31:37,314 - INFO - Found 0 potential article links
+2026-04-30 14:31:37,314 - INFO - Completed https://www.ainonline.com/channel/maintenance: 0 articles
+2026-04-30 14:31:41,489 - INFO - Scraping: https://www.aviationbusinessnews.com/mro/latest-news-mro/
 Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
-2026-04-30 14:19:10,125 - INFO - No links with standard selectors, using fallback method
-2026-04-30 14:19:10,125 - INFO - Found 0 potential article links
-2026-04-30 14:19:10,126 - INFO - Completed https://www.aviationbusinessnews.com/mro/latest-news-mro/: 0 articles
+2026-04-30 14:31:47,969 - INFO - No links with standard selectors, using fallback method
+2026-04-30 14:31:47,970 - INFO - Found 0 potential article links
+2026-04-30 14:31:47,970 - INFO - Completed https://www.aviationbusinessnews.com/mro/latest-news-mro/: 0 articles
 
- Found 0 relevant articles
+ Total articles found: 8
 
- No articles found matching the keywords.
- Websites are heavily blocking automated access
- Consider using official APIs or RSS feeds instead
- Check logs/ folder for detailed error messages
+============================================================
+ANALYTICAL SUMMARY
+============================================================
 
-  Suggestion: Use NewsAPI or RSS feeds for these sources
+ Total Articles: 8
+
+ Articles by Domain:
+ mrobusinesstoday.com: 8
+
+ Top Keywords Found:
+ mro: 8 occurrences
+ maintenance: 8 occurrences
+ support: 6 occurrences
+ repair: 5 occurrences
+ service: 3 occurrences
+ overhaul: 2 occurrences
+ engine: 2 occurrences
+ agreement: 1 occurrences
+
+ Data exported to:
+ CSV: data/exports\mro_articles_20260430_143152.csv
+ JSON: data/exports\mro_articles_20260430_143152.json
+
+Article Preview (first 10):
+   1. [mrobusinesstoday.com] SWISS Elevates the Korea–Europe Experience with A350 Debut and ‘SWISS Senses’...
+ Keywords: service, MRO, support
+   2. [mrobusinesstoday.com] LATAM Airlines taps Rolls-Royce to power Boeing 787 fleet expansion...
+ Keywords: maintenance, service, MRO, Overhaul, Repair
+   3. [mrobusinesstoday.com] Category - Feature...
+ Keywords: Repair, MRO, Overhaul, Maintenance
+   4. [mrobusinesstoday.com] Honeywell Aerospace unveils strategic Board ahead of June 2026 spin-off...
+ Keywords: maintenance, MRO, support
+   5. [mrobusinesstoday.com] Boeing expands 737 MAX footprint with Everett North Line signalling strategic pr...
+ Keywords: maintenance, MRO, support
+   6. [mrobusinesstoday.com] Cabin MRO comes of age as Regent Aerospace bets big on Kuwait as its Middle East...
+ Keywords: maintenance, MRO, service, repair, agreement
+   7. [mrobusinesstoday.com] AIESL strengthens structural repair capabilities with DGCA approval at Trivandru...
+ Keywords: maintenance, MRO, repair, Repair, Maintenance
+   8. [mrobusinesstoday.com] Coltala Aerospace appoints Phil Bathurst as president to lead MRO expansion...
+ Keywords: MRO
 
 ============================================================
 Scraping completed!
 ============================================================
+
+
