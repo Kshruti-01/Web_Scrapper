@@ -230,61 +230,212 @@ Scraping completed!
 ============================================================
 
 
- PS C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper> python main.py
 ============================================================
 MRO WEB SCRAPER
 ============================================================
 
- Target Websites:
- 1. https://mrobusinesstoday.com/
- 2. https://www.ainonline.com/channel/maintenance
- 3. https://www.mroglobal-online.com/mro-directory/
- 4. https://www.aviationbusinessnews.com/mro/latest-news-mro/
-
- Initializing scraper with human-like behavior...
-
  Starting scrape of 4 sites...
 ============================================================
-2026-05-01 16:21:32,227 - INFO - Scraping: https://mrobusinesstoday.com/
-2026-05-01 16:21:35,160 - WARNING - Got 403 Forbidden on attempt 1
-2026-05-01 16:21:42,356 - WARNING - Got 403 Forbidden on attempt 2
-2026-05-01 16:21:47,396 - WARNING - Got 403 Forbidden on attempt 3
-2026-05-01 16:21:47,396 - WARNING - Could not access https://mrobusinesstoday.com/
-2026-05-01 16:21:47,397 - INFO - Completed https://mrobusinesstoday.com/: 0 articles
-2026-05-01 16:21:52,701 - INFO - Scraping: https://www.ainonline.com/channel/maintenance
-Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
-2026-05-01 16:21:55,662 - INFO - No links with standard selectors, using fallback method
-2026-05-01 16:21:55,662 - INFO - Found 0 potential article links
-2026-05-01 16:21:55,664 - INFO - Completed https://www.ainonline.com/channel/maintenance: 0 articles
-2026-05-01 16:21:58,748 - INFO - Scraping: https://www.mroglobal-online.com/mro-directory/
-Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
-2026-05-01 16:22:02,079 - INFO - No links with standard selectors, using fallback method
-2026-05-01 16:22:02,080 - INFO - Found 0 potential article links
-2026-05-01 16:22:02,080 - INFO - Completed https://www.mroglobal-online.com/mro-directory/: 0 articles
-2026-05-01 16:22:07,856 - INFO - Scraping: https://www.aviationbusinessnews.com/mro/latest-news-mro/
-Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
-2026-05-01 16:22:12,178 - INFO - No links with standard selectors, using fallback method
-2026-05-01 16:22:12,179 - INFO - Found 0 potential article links
-2026-05-01 16:22:12,179 - INFO - Completed https://www.aviationbusinessnews.com/mro/latest-news-mro/: 0 articles
+2026-05-01 16:44:53,454 - INFO -
+==================================================
+Scraping: https://mrobusinesstoday.com/
+==================================================
+2026-05-01 16:44:55,166 - WARNING - 403 on attempt 1, retrying...
+2026-05-01 16:44:58,109 - INFO - Extracted 56 total links from page
+2026-05-01 16:44:58,109 - INFO - Processing 10 articles...
+2026-05-01 16:44:58,112 - INFO - [1/10] https://mrobusinesstoday.com/latam-airlines-taps-rolls-royce-to-power-boeing-787-fleet-expansion/
+2026-05-01 16:45:00,812 - INFO -  LATAM Airlines taps Rolls-Royce to power Boeing 787 fleet ex...
+2026-05-01 16:45:00,815 - INFO - Keywords: ['service', 'Overhaul', 'engine', 'Repair', 'MRO', 'maintenance', 'Maintenance', 'support']
+2026-05-01 16:45:00,816 - INFO - [2/10] https://mrobusinesstoday.com/airbus-earnings-slide-highlights-supply-chain-pressures/  
+2026-05-01 16:45:03,432 - WARNING - 403 on attempt 1, retrying...
+2026-05-01 16:45:05,879 - WARNING - 403 on attempt 2, retrying...
+2026-05-01 16:45:10,616 - INFO -  Airbus earnings slide highlights supply chain pressures...
+2026-05-01 16:45:10,617 - INFO - Keywords: ['service', 'engine', 'MRO', 'maintenance', 'support']
+2026-05-01 16:45:10,617 - INFO - [3/10] https://mrobusinesstoday.com/contact-us/
+2026-05-01 16:45:13,505 - WARNING - 403 on attempt 1, retrying...
+2026-05-01 16:45:16,256 - INFO -  Contact Us - MRO Business Today, Latest Aerospace News...
+2026-05-01 16:45:16,258 - INFO - Keywords: ['MRO']
+2026-05-01 16:45:16,260 - INFO - [4/10] https://mrobusinesstoday.com/how-is-amc-technology-building-the-backbone-of-a-homegrown-interiors-ec
+2026-05-01 16:45:18,399 - INFO -  How is AMC Technology building the backbone of a homegrown i...
+2026-05-01 16:45:18,400 - INFO - Keywords: ['MRO', 'maintenance', 'repair', 'support', 'component repair']
+2026-05-01 16:45:18,401 - INFO - [5/10] https://mrobusinesstoday.com/latest-news/engines/
+2026-05-01 16:45:21,804 - WARNING - 403 on attempt 1, retrying...
+2026-05-01 16:45:24,264 - WARNING - 403 on attempt 2, retrying...
+2026-05-01 16:45:28,683 - WARNING - 403 on attempt 3, retrying...
+2026-05-01 16:45:28,685 - INFO - [6/10] https://mrobusinesstoday.com/latest-news/interview/
+2026-05-01 16:45:31,612 - WARNING - 403 on attempt 1, retrying...
+2026-05-01 16:45:34,046 - WARNING - 403 on attempt 2, retrying...
+2026-05-01 16:45:38,562 - WARNING - 403 on attempt 3, retrying...
+2026-05-01 16:45:38,563 - INFO - [7/10] https://mrobusinesstoday.com/mro-of-the-month/
+2026-05-01 16:45:40,022 - WARNING - 403 on attempt 1, retrying...
+2026-05-01 16:45:42,436 - WARNING - 403 on attempt 2, retrying...
+2026-05-01 16:45:46,941 - WARNING - 403 on attempt 3, retrying...
+2026-05-01 16:45:46,942 - INFO - [8/10] https://mrobusinesstoday.com/latest-news/executive-focus/
+2026-05-01 16:45:49,041 - WARNING - 403 on attempt 1, retrying...
+2026-05-01 16:45:51,881 - INFO - [9/10] https://mrobusinesstoday.com/latest-news/aircraft-manufacturers/
+2026-05-01 16:45:54,516 - WARNING - 403 on attempt 1, retrying...
+2026-05-01 16:45:57,019 - WARNING - 403 on attempt 2, retrying...
+2026-05-01 16:46:01,435 - WARNING - 403 on attempt 3, retrying...
+2026-05-01 16:46:01,437 - INFO - [10/10] https://mrobusinesstoday.com/latest-news/event-news/
+2026-05-01 16:46:04,335 - WARNING - 403 on attempt 1, retrying...
+2026-05-01 16:46:07,152 - INFO -  Category - MRO-Events News...
+2026-05-01 16:46:07,155 - INFO - Keywords: ['MRO', 'maintenance']
+2026-05-01 16:46:07,156 - INFO -
+ https://mrobusinesstoday.com/: 5 articles
 
-============================================================
-RESULTS
-============================================================
+2026-05-01 16:46:09,738 - INFO - 
+==================================================
+Scraping: https://www.ainonline.com/channel/maintenance
+==================================================
+2026-05-01 16:46:11,114 - INFO - Extracted 74 total links from page
+2026-05-01 16:46:11,115 - INFO - Processing 10 articles...
+2026-05-01 16:46:11,115 - INFO - [1/10] https://www.ainonline.com/channel/maintenance?page=1
+2026-05-01 16:46:17,875 - INFO -  Maintenance and Modifications...
+2026-05-01 16:46:17,876 - INFO - Keywords: ['Overhaul', 'Service', 'engine', 'MRO', 'overhaul', 'maintenance', 'repair', 'Maintenance', 'support']
+2026-05-01 16:46:17,877 - INFO - [2/10] https://www.ainonline.com/aviation-news/business-aviation/2026-04-24/hop-jet-ntsb-final-report-accur
+2026-05-01 16:46:21,229 - INFO -  Hop-A-Jet: NTSB Final Report on CL604 Naples Crash Is ‘Accur...
+2026-05-01 16:46:21,229 - INFO - Keywords: ['Service', 'Maintenance', 'Engine', 'service']
+2026-05-01 16:46:21,230 - INFO - [3/10] https://www.ainonline.com/channel/cabin-interior-and-electronics
+2026-05-01 16:46:25,539 - INFO -  Cabin Interior and Electronics...
+2026-05-01 16:46:25,541 - INFO - Keywords: ['Maintenance', 'service']
+2026-05-01 16:46:25,542 - INFO - [4/10] https://www.ainonline.com/aircraft4sale
+2026-05-01 16:46:27,748 - INFO -  Aircraft Exchange | Aviation International News...
+2026-05-01 16:46:27,749 - INFO - Keywords: ['Service', 'Maintenance']
+2026-05-01 16:46:27,749 - INFO - [5/10] https://www.ainonline.com/aviation-news/business-aviation/2026-04-14/wildhorse-helicopters-bell-47-g
+2026-05-01 16:46:33,641 - INFO -  Wildhorse Helicopters Bell 47 Gets Full Night Vision Goggle ...
+2026-05-01 16:46:33,642 - INFO - Keywords: ['Engine', 'service', 'Service', 'engine', 'MRO', 'maintenance', 'Maintenance', 'Support']
+2026-05-01 16:46:33,642 - INFO - [6/10] https://www.ainonline.com/print/april-2026
+2026-05-01 16:46:36,239 - INFO -  Aviation International News...
+2026-05-01 16:46:36,239 - INFO - Keywords: ['Service', 'Maintenance']
+2026-05-01 16:46:36,241 - INFO - [7/10] https://www.ainonline.com/reports
+2026-05-01 16:46:40,224 - INFO -  In-Depth Reports...
+2026-05-01 16:46:40,225 - INFO - Keywords: ['Service', 'engine', 'Maintenance', 'support', 'Support']
+2026-05-01 16:46:40,225 - INFO - [8/10] https://www.ainonline.com/channel/unmanned-aerial-vehicles
+2026-05-01 16:46:45,084 - INFO -  Unmanned Aerial Vehicles...
+2026-05-01 16:46:45,084 - INFO - Keywords: ['Maintenance']
+2026-05-01 16:46:45,085 - INFO - [9/10] https://www.ainonline.com/futureflight
+2026-05-01 16:46:49,621 - INFO -  FutureFlight  | Aviation International News...
+2026-05-01 16:46:49,621 - INFO - Keywords: ['Service', 'engine', 'Contract', 'Maintenance', 'support']
+2026-05-01 16:46:49,623 - INFO - [10/10] https://www.ainonline.com/aviation-webinars
+2026-05-01 16:46:52,635 - INFO -  Webinars | Aviation International News...
+2026-05-01 16:46:52,635 - INFO - Keywords: ['Service', 'Maintenance']
+2026-05-01 16:46:52,637 - INFO -
+ https://www.ainonline.com/channel/maintenance: 10 articles
 
- Total Articles Found: 0
+2026-05-01 16:46:55,848 - INFO - 
+==================================================
+Scraping: https://www.mroglobal-online.com/mro-directory/
+==================================================
+2026-05-01 16:46:58,543 - INFO - Extracted 15 total links from page
+2026-05-01 16:46:58,544 - INFO - Processing 10 articles...
+2026-05-01 16:46:58,544 - INFO - [1/10] https://www.mroglobal-online.com/request-mro-details-update/
+2026-05-01 16:47:01,125 - INFO -  Request MRO details update...
+2026-05-01 16:47:01,127 - INFO - Keywords: ['support', 'MRO']
+2026-05-01 16:47:01,128 - INFO - [2/10] https://www.mroglobal-online.com/logistics/
+2026-05-01 16:47:04,014 - INFO -  Logistics - MRO Global...
+2026-05-01 16:47:04,016 - INFO - Keywords: ['support', 'MRO']
+2026-05-01 16:47:04,016 - INFO - [3/10] https://www.mroglobal-online.com/list-your-mro/
+2026-05-01 16:47:06,644 - INFO -  List Your MRO...
+2026-05-01 16:47:06,646 - INFO - Keywords: ['Maintenance', 'Engine', 'support', 'MRO']
+2026-05-01 16:47:06,646 - INFO - [4/10] https://www.mroglobal-online.com/interested-member-registration/
+2026-05-01 16:47:09,590 - INFO -  Interested member registration...
+2026-05-01 16:47:09,590 - INFO - Keywords: ['support', 'MRO']
+2026-05-01 16:47:09,591 - INFO - [5/10] https://www.mroglobal-online.com
+2026-05-01 16:47:12,127 - INFO -  Your one-stop-shop for all major maintenance, repair & overh...
+2026-05-01 16:47:12,129 - INFO - Keywords: ['MRO', 'overhaul', 'maintenance', 'repair', 'support']
+2026-05-01 16:47:12,130 - INFO - [6/10] https://www.mroglobal-online.com/account-register
+2026-05-01 16:47:15,893 - INFO -  Register - MRO Global...
+2026-05-01 16:47:15,893 - INFO - Keywords: ['MRO']
+2026-05-01 16:47:15,893 - INFO - [7/10] https://www.mroglobal-online.com/about/
+2026-05-01 16:47:18,067 - INFO -  About - MRO Global...
+2026-05-01 16:47:18,070 - INFO - Keywords: ['Engine', 'engine', 'MRO', 'Maintenance', 'support']
+2026-05-01 16:47:18,071 - INFO - [8/10] https://www.mroglobal-online.com/contact/
+2026-05-01 16:47:21,905 - INFO -  Contact Us - MRO Global...
+2026-05-01 16:47:21,906 - INFO - Keywords: ['support', 'MRO']
+2026-05-01 16:47:21,906 - INFO - [9/10] https://www.mroglobal-online.com/privacy-policy/
+2026-05-01 16:47:25,861 - INFO -  Privacy Policy...
+2026-05-01 16:47:25,862 - INFO - Keywords: ['service']
+2026-05-01 16:47:25,862 - INFO - [10/10] https://www.mroglobal-online.com/account-register/
+2026-05-01 16:47:29,753 - INFO -  Register - MRO Global...
+2026-05-01 16:47:29,755 - INFO - Keywords: ['MRO']
+2026-05-01 16:47:29,756 - INFO -
+ https://www.mroglobal-online.com/mro-directory/: 10 articles
 
- No articles found matching the keywords.
+2026-05-01 16:47:33,174 - INFO - 
+==================================================
+Scraping: https://www.aviationbusinessnews.com/mro/latest-news-mro/
+==================================================
+2026-05-01 16:47:35,014 - INFO - Extracted 58 total links from page
+2026-05-01 16:47:35,015 - INFO - Processing 10 articles...
+2026-05-01 16:47:35,016 - INFO - [1/10] https://www.aviationbusinessnews.com/cabin/airlines/
+2026-05-01 16:47:37,213 - INFO -  Airlines Archives - Aviation Business News...
+2026-05-01 16:47:37,213 - INFO - Keywords: ['MRO']
+2026-05-01 16:47:37,213 - INFO - [2/10] https://www.aviationbusinessnews.com/register/
+2026-05-01 16:47:39,723 - INFO -  Register - Aviation Business News...
+2026-05-01 16:47:39,724 - INFO - Keywords: ['Service', 'service', 'MRO']
+2026-05-01 16:47:39,724 - INFO - [3/10] https://www.aviationbusinessnews.com/mro/aircraft-mro-management/
+2026-05-01 16:47:42,582 - INFO -  Aircraft & Airlines...
+2026-05-01 16:47:42,583 - INFO - Keywords: ['contract', 'engine', 'MRO', 'agreement', 'maintenance', 'Maintenance', 'support']
+2026-05-01 16:47:42,583 - INFO - [4/10] https://www.aviationbusinessnews.com/low-cost/
+2026-05-01 16:47:44,063 - INFO -  UK LCCs rule out fuel surcharges despite Middle East supply ...
+2026-05-01 16:47:44,064 - INFO - Keywords: ['contract', 'service', 'engine', 'MRO', 'agreement', 'maintenance', 'support']
+2026-05-01 16:47:44,064 - INFO - [5/10] https://www.aviationbusinessnews.com/low-cost/regional-review/
+2026-05-01 16:47:46,071 - INFO -  Regional Review...
+2026-05-01 16:47:46,071 - INFO - Keywords: ['agreement', 'MRO']
+2026-05-01 16:47:46,073 - INFO - [6/10] https://www.aviationbusinessnews.com/mro/parts-components/
+2026-05-01 16:47:48,595 - INFO -  Parts & Components...
+2026-05-01 16:47:48,595 - INFO - Keywords: ['service', 'engine', 'MRO', 'agreement', 'Agreement', 'Engine', 'support']
+2026-05-01 16:47:48,597 - INFO - [7/10] https://www.aviationbusinessnews.com/cabin/zim-completes-aircraft-reconfiguration-technologies-sale-
+2026-05-01 16:47:50,632 - INFO -  ZIM completes Aircraft Reconfiguration Technologies sale to ...
+2026-05-01 16:47:50,633 - INFO - Keywords: ['service', 'Repair', 'MRO']
+2026-05-01 16:47:50,633 - INFO - [8/10] https://www.aviationbusinessnews.com/cargo/passenger-freighter-conversions/
+2026-05-01 16:47:53,587 - INFO -  Passenger-to-Freighter Conversions...
+2026-05-01 16:47:53,587 - INFO - Keywords: ['Service', 'contract', 'service', 'MRO']
+2026-05-01 16:47:53,588 - INFO - [9/10] https://www.aviationbusinessnews.com/rrmavi_admin_tool?action=lostpassword
+2026-05-01 16:47:57,896 - INFO -  Password Lost...
+2026-05-01 16:47:57,897 - INFO - Keywords: ['Service', 'service', 'MRO']
+2026-05-01 16:47:57,898 - INFO - [10/10] https://www.aviationbusinessnews.com/mro/facilities/
+2026-05-01 16:48:00,685 - INFO -  Facilities/Hangars...
+2026-05-01 16:48:00,685 - INFO - Keywords: ['service', 'engine', 'MRO', 'agreement', 'maintenance', 'support', 'component repair']
+2026-05-01 16:48:00,687 - INFO -
+ https://www.aviationbusinessnews.com/mro/latest-news-mro/: 10 articles
 
-  Troubleshooting Tips:
-   1. These sites use Cloudflare anti-bot protection
-   2. The scraper uses human-like behavior to bypass
-   3. Some sites load content via JavaScript (needs Selenium)
-   4. Corporate networks may block some connections
 
- Recommended Next Steps:
- Try running from a different network
- Consider using Selenium for JavaScript sites
- Check logs/ folder for detailed error messages
+ Found 35 relevant articles
+
+ Articles by Domain:
+ mrobusinesstoday.com: 5
+ ainonline.com: 10
+ mroglobal-online.com: 10
+ aviationbusinessnews.com: 10
+
+ Top Keywords Found:
+mro: 26 occurrences
+service: 24 occurrences
+maintenance: 24 occurrences
+support: 19 occurrences
+engine: 16 occurrences
+agreement: 6 occurrences
+repair: 5 occurrences
+overhaul: 4 occurrences
+contract: 4 occurrences
+component repair: 2 occurrences
+
+ Data exported to:
+ CSV: data/exports\mro_articles_20260501_164802.csv
+ JSON: data/exports\mro_articles_20260501_164802.json
+
+ Article Preview (first 5):
+   1. [mrobusinesstoday.com] LATAM Airlines taps Rolls-Royce to power Boeing 787 fleet expansion...
+ Keywords: service, Overhaul, engine, Repair, MRO
+   2. [mrobusinesstoday.com] Airbus earnings slide highlights supply chain pressures...
+ Keywords: service, engine, MRO, maintenance, support
+   3. [mrobusinesstoday.com] Contact Us - MRO Business Today, Latest Aerospace News...
+ Keywords: MRO
+   4. [mrobusinesstoday.com] How is AMC Technology building the backbone of a homegrown interiors ecosystem?...
+ Keywords: MRO, maintenance, repair, support, component repair
+   5. [mrobusinesstoday.com] Category - MRO-Events News...
+ Keywords: MRO, maintenance
 
 ============================================================
 Scraping completed!
