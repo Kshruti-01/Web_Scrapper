@@ -1,9 +1,9 @@
 """
 Configuration settings for the MRO Web Scraper
-Central place for all constants, keywords, and scraping parameters
+Focused only on original target websites
 """
 
-# Target URLs to scrape (excluding paywalled/blocked sites)
+# Original target URLs (your specified websites)
 TARGET_URLS = [
     "https://mrobusinesstoday.com/",
     "https://www.ainonline.com/channel/maintenance",
