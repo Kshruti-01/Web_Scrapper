@@ -230,3 +230,62 @@ Scraping completed!
 ============================================================
 
 
+ PS C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper> python main.py
+============================================================
+MRO WEB SCRAPER
+============================================================
+
+ Target Websites:
+ 1. https://mrobusinesstoday.com/
+ 2. https://www.ainonline.com/channel/maintenance
+ 3. https://www.mroglobal-online.com/mro-directory/
+ 4. https://www.aviationbusinessnews.com/mro/latest-news-mro/
+
+ Initializing scraper with human-like behavior...
+
+ Starting scrape of 4 sites...
+============================================================
+2026-05-01 16:21:32,227 - INFO - Scraping: https://mrobusinesstoday.com/
+2026-05-01 16:21:35,160 - WARNING - Got 403 Forbidden on attempt 1
+2026-05-01 16:21:42,356 - WARNING - Got 403 Forbidden on attempt 2
+2026-05-01 16:21:47,396 - WARNING - Got 403 Forbidden on attempt 3
+2026-05-01 16:21:47,396 - WARNING - Could not access https://mrobusinesstoday.com/
+2026-05-01 16:21:47,397 - INFO - Completed https://mrobusinesstoday.com/: 0 articles
+2026-05-01 16:21:52,701 - INFO - Scraping: https://www.ainonline.com/channel/maintenance
+Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
+2026-05-01 16:21:55,662 - INFO - No links with standard selectors, using fallback method
+2026-05-01 16:21:55,662 - INFO - Found 0 potential article links
+2026-05-01 16:21:55,664 - INFO - Completed https://www.ainonline.com/channel/maintenance: 0 articles
+2026-05-01 16:21:58,748 - INFO - Scraping: https://www.mroglobal-online.com/mro-directory/
+Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
+2026-05-01 16:22:02,079 - INFO - No links with standard selectors, using fallback method
+2026-05-01 16:22:02,080 - INFO - Found 0 potential article links
+2026-05-01 16:22:02,080 - INFO - Completed https://www.mroglobal-online.com/mro-directory/: 0 articles
+2026-05-01 16:22:07,856 - INFO - Scraping: https://www.aviationbusinessnews.com/mro/latest-news-mro/
+Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
+2026-05-01 16:22:12,178 - INFO - No links with standard selectors, using fallback method
+2026-05-01 16:22:12,179 - INFO - Found 0 potential article links
+2026-05-01 16:22:12,179 - INFO - Completed https://www.aviationbusinessnews.com/mro/latest-news-mro/: 0 articles
+
+============================================================
+RESULTS
+============================================================
+
+ Total Articles Found: 0
+
+ No articles found matching the keywords.
+
+  Troubleshooting Tips:
+   1. These sites use Cloudflare anti-bot protection
+   2. The scraper uses human-like behavior to bypass
+   3. Some sites load content via JavaScript (needs Selenium)
+   4. Corporate networks may block some connections
+
+ Recommended Next Steps:
+ Try running from a different network
+ Consider using Selenium for JavaScript sites
+ Check logs/ folder for detailed error messages
+
+============================================================
+Scraping completed!
+============================================================
