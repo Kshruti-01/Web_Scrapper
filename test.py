@@ -2,92 +2,81 @@ import time
 from datetime import datetime
 from pathlib import Path
 import subprocess
-import sys
+import win32com.client as win32
+import pyautogui
+import threading
 
-# Kill any stuck Excel processes before starting
-print("Cleaning up previous Excel processes...")
+# Kill existing Excel processes
 subprocess.run(['taskkill', '/f', '/im', 'excel.exe'], capture_output=True)
 time.sleep(2)
 
-# Create file path in Documents folder
+# Function to automatically click "No" on the Genpact popup
+def auto_click_no():
+    time.sleep(3)  # Wait for Excel to start
+    while True:
+        try:
+            # Look for the Genpact popup window
+            popup = pyautogui.locateOnScreen(pyautogui.size(), confidence=0.7)
+            # Check if popup exists by looking for "Genpact" or "Classification" text
+            screenshot = pyautogui.screenshot()
+            if "Classification" in str(pyautogui.locateAll):
+                # Press 'N' key for "No" or click the No button
+                pyautogui.press('n')  # Alt+N or just N
+                time.sleep(0.5)
+                pyautogui.press('enter')
+                print("✓ Auto-clicked 'No' on classification popup")
+        except:
+            pass
+        time.sleep(1)
+
+# Start auto-clicker in background
+clicker_thread = threading.Thread(target=auto_click_no, daemon=True)
+clicker_thread.start()
+
+# Create file path
 documents_path = Path.home() / "Documents"
 documents_path.mkdir(parents=True, exist_ok=True)
 filename = documents_path / f"excel_live_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
 filename = str(filename)
 
-print(f"File will be saved to: {filename}")
-print("Starting Excel")
+print(f"Saving to: {filename}")
+print("Starting Excel...")
 print("Press Ctrl+C to stop logging\n")
 
 try:
-    import win32com.client as win32
-    
-    # Create Excel instance with all alerts disabled from the start
+    # Start Excel
     excel = win32.Dispatch("Excel.Application")
     excel.DisplayAlerts = False
-    excel.AskToUpdateLinks = False
     excel.Visible = True
     
-    # Add new workbook
     wb = excel.Workbooks.Add()
     ws = wb.ActiveSheet
     
-    # Set headers
-    ws.Cells(1, 1).Value = "Timestamp"  # Column A
-    ws.Cells(1, 2).Value = "Text"       # Column B
-    
-    # Format headers as bold
+    ws.Cells(1, 1).Value = "Timestamp"
+    ws.Cells(1, 2).Value = "Text"
     ws.Range("A1:B1").Font.Bold = True
     
-    # Save the file
     wb.SaveAs(filename)
-    print("Excel file created successfully!")
-    print("Writing data...\n")
+    print("Excel ready!\n")
     
-    row = 2  # Start from row 2
+    row = 2
     
     while True:
-        try:
-            # Write timestamp in column A
-            current_time = datetime.now().strftime('%H:%M:%S.%f')[:-3]
-            ws.Cells(row, 1).Value = current_time
-            
-            # Write "abcd" in column B
-            ws.Cells(row, 2).Value = "abcd"
-            
-            # Save every 20 rows
-            if (row - 1) % 20 == 0:
-                wb.Save()
-                print(f"Saved at row {row-1} (Total: {row-1} rows)")
-            
-            row += 1
-            time.sleep(0.2)
-            
-        except Exception as e:
-            print(f"Error at row {row}: {e}")
-            break
-            
+        ws.Cells(row, 1).Value = datetime.now().strftime('%H:%M:%S.%f')[:-3]
+        ws.Cells(row, 2).Value = "abcd"
+        
+        if (row - 1) % 20 == 0:
+            wb.Save()
+            print(f"Saved at row {row-1}")
+        
+        row += 1
+        time.sleep(0.2)
+        
 except KeyboardInterrupt:
-    print("\n\n Stopping")
-    
-except Exception as e:
-    print(f"\nError: {e}")
+    print("\n\nStopping.")
     
 finally:
-    try:
-        # Save final data
-        if 'wb' in locals():
-            wb.Save()
-            print(f"\n Final save completed!")
-            print(f"Total rows written: {row-2}")
-            print(f"File location: {filename}")
-        
-        # Close Excel
-        if 'excel' in locals():
-            excel.Quit()
-            print("Excel closed successfully")
-            
-    except:
-        pass
-    
-    print("\n Script finished!")
+    wb.Save()
+    excel.Quit()
+    print(f"\nDone! Total rows: {row-2}")
+    print(f"File: {filename}")
