@@ -43,3 +43,21 @@ except KeyboardInterrupt:
     wb.save()
     print(f"\nStopped and saved. Total rows written: {row-1}")
     app.quit()
+
+
+
+PS C:\Users\850085869\OneDrive - Genpact\Desktop\Project\testing> pip install xlwings
+Defaulting to user installation because normal site-packages is not writeable
+Collecting xlwings
+  Downloading xlwings-0.35.2-cp312-cp312-win_amd64.whl.metadata (6.4 kB)
+Collecting pywin32>=224 (from xlwings)
+  Using cached pywin32-311-cp312-cp312-win_amd64.whl.metadata (10 kB)
+Downloading xlwings-0.35.2-cp312-cp312-win_amd64.whl (1.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 1.8 MB/s eta 0:00:00
+Using cached pywin32-311-cp312-cp312-win_amd64.whl (9.5 MB)
+Installing collected packages: pywin32, xlwings
+  WARNING: The scripts pywin32_postinstall.exe and pywin32_testall.exe are installed in 'C:\Users\850085869\AppData\Roaming\Python\Python312\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script xlwings.exe is installed in 'C:\Users\850085869\AppData\Roaming\Python\Python312\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed pywin32-311 xlwings-0.35.2
