@@ -1,0 +1,490 @@
+PS C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper> python main.py
+C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper\venv\Lib\site-packages\requests\__init__.py:86: RequestsDependencyWarning: Unable to find acceptable character detection dependency (chardet or charset_normalizer).
+  warnings.warn(
+============================================================
+MRO WEB SCRAPER
+============================================================
+2026-07-20 21:42:40,514 - INFO - ============================================================
+2026-07-20 21:42:40,517 - INFO - Using 23 keywords for filtering
+2026-07-20 21:42:40,520 - INFO - Target sites: 8
+2026-07-20 21:42:40,522 - INFO - ============================================================
+2026-07-20 21:42:40,524 - INFO - ============================================================
+2026-07-20 21:42:40,525 - INFO - KEYWORD FILTER CONFIGURATION
+2026-07-20 21:42:40,526 - INFO - ============================================================
+2026-07-20 21:42:40,526 - INFO - Total keywords loaded: 23
+2026-07-20 21:42:40,527 - INFO - Keywords:
+2026-07-20 21:42:40,547 - INFO -    1. MRO
+2026-07-20 21:42:40,554 - INFO -    2. maintenance
+2026-07-20 21:42:40,576 - INFO -    3. contract
+2026-07-20 21:42:40,591 - INFO -    4. agreement
+2026-07-20 21:42:40,592 - INFO -    5. engine
+2026-07-20 21:42:40,593 - INFO -    6. service
+2026-07-20 21:42:40,593 - INFO -    7. engine service
+2026-07-20 21:42:40,594 - INFO -    8. service agreement
+2026-07-20 21:42:40,595 - INFO -    9. repair
+2026-07-20 21:42:40,595 - INFO -   10. overhaul
+2026-07-20 21:42:40,596 - INFO -   11. repair contract
+2026-07-20 21:42:40,596 - INFO -   12. overhaul contract
+2026-07-20 21:42:40,596 - INFO -   13. MRO provider
+2026-07-20 21:42:40,598 - INFO -   14. component repair
+2026-07-20 21:42:40,598 - INFO -   15. support
+2026-07-20 21:42:40,598 - INFO -   16. fleet support
+2026-07-20 21:42:40,598 - INFO -   17. Airblue
+2026-07-20 21:42:40,599 - INFO -   18. Airasia
+2026-07-20 21:42:40,599 - INFO -   19. Cebu Air Inc
+2026-07-20 21:42:40,599 - INFO -   20. Spring Airlines
+2026-07-20 21:42:40,599 - INFO -   21. Cebu Pacific Air
+2026-07-20 21:42:40,600 - INFO -   22. Shenzhen Airlines
+2026-07-20 21:42:40,600 - INFO -   23. CFM56-5B
+2026-07-20 21:42:40,600 - INFO - ============================================================
+2026-07-20 21:42:40,602 - INFO - Scraper initialized successfully
+
+ Starting scrape of 8 sites...
+============================================================
+2026-07-20 21:42:40,603 - INFO - ============================================================
+2026-07-20 21:42:40,603 - INFO - STARTING SCRAPING PROCESS
+2026-07-20 21:42:40,603 - INFO - Total sites to scrape: 8
+2026-07-20 21:42:40,604 - INFO - ============================================================
+2026-07-20 21:42:40,604 - INFO - 
+Site 1/8: https://mrobusinesstoday.com/
+2026-07-20 21:42:40,605 - INFO - 
+==================================================
+Scraping: https://mrobusinesstoday.com/
+==================================================
+2026-07-20 21:42:41,743 - WARNING - HTTP 202 on attempt 1
+2026-07-20 21:42:45,968 - WARNING - HTTP 202 on attempt 2
+2026-07-20 21:42:52,184 - WARNING - HTTP 202 on attempt 3
+2026-07-20 21:42:52,185 - ERROR - Could not access https://mrobusinesstoday.com/
+2026-07-20 21:42:52,188 - INFO - 
+✓ https://mrobusinesstoday.com/: 0 articles found
+
+2026-07-20 21:42:54,522 - INFO - 
+Site 2/8: https://www.ainonline.com/channel/maintenance
+2026-07-20 21:42:54,523 - INFO - 
+==================================================
+Scraping: https://www.ainonline.com/channel/maintenance
+==================================================
+2026-07-20 21:42:55,351 - INFO - Extracted 74 total links from page
+2026-07-20 21:42:55,352 - INFO - Processing 50 articles...
+2026-07-20 21:42:55,353 - INFO - [1/50] https://www.ainonline.com/aviation-news/air-transport/2026-07-18/boeing-predicts-20-year-49t-commerc
+2026-07-20 21:42:59,806 - INFO - ✓ MATCH: Boeing Predicts 20-year $4.9T Commercial Support Demand  | A...
+2026-07-20 21:42:59,806 - INFO -   Keywords: ['Maintenance', 'repair', 'Service', 'MRO', 'Support']
+2026-07-20 21:42:59,807 - INFO - [2/50] https://www.ainonline.com/aviation-news/defense/2026-06-23/amentum-sharpens-focus-uk-defense-objecti
+2026-07-20 21:43:04,479 - INFO - ✓ MATCH: Amentum Sharpens UK Focus on Shifting Defense Objectives  | ...
+2026-07-20 21:43:04,480 - INFO -   Keywords: ['Maintenance', 'Engine', 'Service', 'support']
+2026-07-20 21:43:04,480 - INFO - [3/50] https://www.ainonline.com/channel/finance-taxes-insurance
+2026-07-20 21:43:09,078 - INFO - ✓ MATCH: Finance, Taxes, Insurance...
+2026-07-20 21:43:09,078 - INFO -   Keywords: ['Maintenance', 'Engine', 'Service', 'support']
+2026-07-20 21:43:09,078 - INFO - [4/50] https://www.ainonline.com/channel/regulations-and-government
+2026-07-20 21:43:14,013 - INFO - ✓ MATCH: Regulations and Government...
+2026-07-20 21:43:14,013 - INFO -   Keywords: ['Maintenance', 'Engine', 'Support', 'Overhaul']
+2026-07-20 21:43:14,014 - INFO - [5/50] https://www.ainonline.com/aviation-news/video/how-data-technology-improving-aircraft-maintenance-pro
+2026-07-20 21:43:19,240 - INFO - ✓ MATCH: How Data Technology Is Improving the Aircraft Maintenance Pr...
+2026-07-20 21:43:19,240 - INFO -   Keywords: ['Maintenance', 'Engine', 'repair', 'Service', 'MRO', 'Support']
+2026-07-20 21:43:19,241 - INFO - [6/50] https://www.ainonline.com/aviation-news/business-aviation/2026-07-16/crewchief-mx-adds-platform-airc
+2026-07-20 21:43:22,400 - INFO - ✓ MATCH: Crewchief MX Integrates In-platform Aircraft Parts Search an...
+2026-07-20 21:43:22,403 - INFO -   Keywords: ['Maintenance', 'repair', 'Service', 'MRO', 'Support']
+2026-07-20 21:43:22,404 - INFO - [7/50] https://www.ainonline.com/channel/maintenance?page=1
+2026-07-20 21:43:28,848 - INFO - ✓ MATCH: Maintenance and Modifications...
+2026-07-20 21:43:28,849 - INFO -   Keywords: ['Maintenance', 'Engine', 'Overhaul', 'repair', 'maintenance', 'engine', 'overhaul', 'Service', 'service', 'MRO', 'Support', 'support']
+2026-07-20 21:43:28,849 - INFO - [8/50] https://www.ainonline.com/legal/terms
+2026-07-20 21:43:32,473 - INFO - ✓ MATCH: Terms and Conditions of AIN Media Group, Inc...
+2026-07-20 21:43:32,473 - INFO -   Keywords: ['Maintenance', 'Engine', 'Service', 'contract', 'Agreement']
+2026-07-20 21:43:32,474 - INFO - [9/50] https://www.ainonline.com/channel/operations
+2026-07-20 21:43:37,924 - INFO - ✓ MATCH: Operations | Aviation International News...
+2026-07-20 21:43:37,924 - INFO -   Keywords: ['Maintenance', 'Engine', 'maintenance', 'Service', 'service', 'support']
+2026-07-20 21:43:37,924 - INFO - [10/50] https://www.ainonline.com/legal/cookie-policy
+2026-07-20 21:43:40,682 - INFO - ✓ MATCH: Cookie Policy | Aviation International News...
+2026-07-20 21:43:40,682 - INFO -   Keywords: ['service', 'Maintenance', 'Service', 'Engine']
+2026-07-20 21:43:40,682 - INFO - [11/50] https://www.ainonline.com/history
+2026-07-20 21:43:44,781 - INFO - ✓ MATCH: AIN History  | Aviation International News...
+2026-07-20 21:43:44,782 - INFO -   Keywords: ['Maintenance', 'Service', 'Engine']
+2026-07-20 21:43:44,782 - INFO - [12/50] https://www.ainonline.com/our-writers
+2026-07-20 21:43:48,596 - INFO - ✓ MATCH: Our Writers  | Aviation International News...
+2026-07-20 21:43:48,597 - INFO -   Keywords: ['Maintenance', 'Service', 'Engine']
+2026-07-20 21:43:48,597 - INFO - [13/50] https://www.ainonline.com/archive-email
+2026-07-20 21:43:51,415 - INFO - ✓ MATCH: Past Emails Archive | Aviation International News...
+2026-07-20 21:43:51,415 - INFO -   Keywords: ['Maintenance', 'Service', 'Engine']
+2026-07-20 21:43:51,415 - INFO - [14/50] https://www.ainonline.com/aviation-news/air-transport/2026-07-15/pratt-whitney-adds-ai-borescope-ins
+2026-07-20 21:43:54,580 - INFO - ✓ MATCH: Pratt & Whitney Adds AI to Borescope Inspections after Lates...
+2026-07-20 21:43:54,580 - INFO -   Keywords: ['Maintenance', 'Engine', 'Overhaul Contract', 'engine', 'Service', 'service', 'contract']
+2026-07-20 21:43:54,581 - INFO - [15/50] https://www.ainonline.com/aviation-news/defense/2026-07-15/rafs-first-e-7-wedgetail-faces-more-testi
+2026-07-20 21:44:00,067 - INFO - ✓ MATCH: RAF’s First E-7 Wedgetail Faces More Testing Before Service ...
+2026-07-20 21:44:00,068 - INFO -   Keywords: ['Maintenance', 'repair', 'Service', 'MRO', 'Support']
+2026-07-20 21:44:00,068 - INFO - [16/50] https://www.ainonline.com/aviation-news/business-aviation/2026-07-20/blackhawk-group-launches-new-pr
+2026-07-20 21:44:03,245 - INFO - ✓ MATCH: Blackhawk Group Launches a New Propeller Solutions Group  | ...
+2026-07-20 21:44:03,245 - INFO -   Keywords: ['Maintenance', 'repair', 'Service', 'MRO', 'Support']
+2026-07-20 21:44:03,245 - INFO - [17/50] https://www.ainonline.com/channel/engines
+2026-07-20 21:44:09,340 - INFO - ✓ MATCH: Engines | Aviation International News...
+2026-07-20 21:44:09,345 - INFO -   Keywords: ['Maintenance', 'Engine', 'Overhaul Contract', 'engine', 'service', 'Service', 'contract', 'Agreement']
+2026-07-20 21:44:09,346 - INFO - [18/50] https://www.ainonline.com/aviation-news/business-aviation/2026-07-14/avtopia-forum-helps-bizav-make-
+2026-07-20 21:44:13,280 - INFO - ✓ MATCH: Avtopia Forum Helps Bizav Foster Aviation Connections  | Avi...
+2026-07-20 21:44:13,281 - INFO -   Keywords: ['Maintenance', 'Service']
+2026-07-20 21:44:13,281 - INFO - [19/50] https://www.ainonline.com/channel/accidents
+2026-07-20 21:44:17,972 - INFO - ✓ MATCH: Accidents | Aviation International News...
+2026-07-20 21:44:17,973 - INFO -   Keywords: ['Maintenance', 'maintenance', 'Service', 'Engine']
+2026-07-20 21:44:17,973 - INFO - [20/50] https://www.ainonline.com/channel/charter-fractional
+2026-07-20 21:44:22,486 - INFO - ✓ MATCH: Charter & Fractional...
+2026-07-20 21:44:22,487 - INFO -   Keywords: ['Maintenance', 'Engine', 'service', 'support']
+2026-07-20 21:44:22,488 - INFO - [21/50] https://www.ainonline.com/section/defense
+2026-07-20 21:44:27,304 - INFO - ✓ MATCH: Defense | Aviation International News...
+2026-07-20 21:44:27,304 - INFO -   Keywords: ['Maintenance', 'Agreement', 'Engine', 'Overhaul Contract', 'engine', 'Service', 'contract', 'Contract', 'support']
+2026-07-20 21:44:27,304 - INFO - [22/50] https://www.ainonline.com/expert-opinion
+2026-07-20 21:44:33,422 - INFO - ✓ MATCH: Expert Opinion...
+2026-07-20 21:44:33,423 - INFO -   Keywords: ['Maintenance', 'Service', 'Engine']
+2026-07-20 21:44:33,423 - INFO - [23/50] https://www.ainonline.com/aviation-news/video/textron-aviations-king-air-aircraft-can-be-deployed-mu
+2026-07-20 21:44:40,070 - INFO - ✓ MATCH: Textron Aviation's King Air Aircraft Can be Deployed For Spe...
+2026-07-20 21:44:40,071 - INFO -   Keywords: ['Maintenance', 'Support', 'Service', 'Engine']
+2026-07-20 21:44:40,071 - INFO - [24/50] https://www.ainonline.com/channel/maintenance?page=2
+2026-07-20 21:44:45,814 - INFO - ✓ MATCH: Maintenance and Modifications...
+2026-07-20 21:44:45,815 - INFO -   Keywords: ['Maintenance', 'Engine', 'repair', 'maintenance', 'engine', 'overhaul', 'service', 'Service', 'MRO', 'Repair', 'Support', 'support']
+2026-07-20 21:44:45,815 - INFO - [25/50] https://www.ainonline.com/futureflight
+2026-07-20 21:44:50,107 - INFO - ✓ MATCH: FutureFlight  | Aviation International News...
+2026-07-20 21:44:50,108 - INFO -   Keywords: ['Maintenance', 'Engine', 'Overhaul', 'engine', 'service']
+2026-07-20 21:44:50,108 - INFO - [26/50] https://www.ainonline.com/aviation-news/air-transport/2026-07-18/cfm-certifies-leap-1b-engine-durabi
+2026-07-20 21:44:52,539 - INFO - ✓ MATCH: CFM Certifies Leap 1B Engine Durability Kits To Boost Time o...
+2026-07-20 21:44:52,540 - INFO -   Keywords: ['Maintenance', 'Engine', 'Overhaul Contract', 'engine', 'service', 'Service', 'contract']
+2026-07-20 21:44:52,540 - INFO - [27/50] https://www.ainonline.com/aviation-news/business-aviation/2026-07-14/oklahoma-mx-provider-adds-fbo-w
+2026-07-20 21:44:56,266 - INFO - ✓ MATCH: Oklahoma Mx Provider Adds FBO at Wiley Post Airport  | Aviat...
+2026-07-20 21:44:56,267 - INFO -   Keywords: ['Maintenance', 'Service']
+2026-07-20 21:44:56,267 - INFO - [28/50] https://www.ainonline.com/channel/environment
+2026-07-20 21:45:01,535 - INFO - ✓ MATCH: Sustainability and Environment...
+2026-07-20 21:45:01,536 - INFO -   Keywords: ['Maintenance', 'Engine', 'engine', 'Service', 'support']
+2026-07-20 21:45:01,536 - INFO - [29/50] https://www.ainonline.com/aviation-news/video/laying-groundwork-aviations-maintenance-demand-ain-rou
+2026-07-20 21:45:07,069 - INFO - ✓ MATCH: Laying the Groundwork for Aviation's Maintenance Demand – AI...
+2026-07-20 21:45:07,069 - INFO -   Keywords: ['Maintenance', 'Engine', 'repair', 'Service', 'MRO', 'Support']
+2026-07-20 21:45:07,069 - INFO - [30/50] https://www.ainonline.com/airshows-conventions
+2026-07-20 21:45:10,668 - INFO - ✓ MATCH: Airshows & Conventions | Aviation International News...
+2026-07-20 21:45:10,671 - INFO -   Keywords: ['Maintenance', 'Service', 'Engine']
+2026-07-20 21:45:10,678 - INFO - [31/50] https://www.ainonline.com/aviation-news/business-aviation/2026-07-10/duncan-aviation-puts-eyes-sky-c
+2026-07-20 21:45:16,452 - INFO - ✓ MATCH: Duncan Aviation Puts Eyes in the Sky on CJ3+ with Colorful P...
+2026-07-20 21:45:16,453 - INFO -   Keywords: ['Maintenance', 'repair', 'Service', 'MRO', 'Support']
+2026-07-20 21:45:16,453 - INFO - [32/50] https://www.ainonline.com/customer-service
+2026-07-20 21:45:19,493 - INFO - ✓ MATCH: Customer Service | Aviation International News...
+2026-07-20 21:45:19,493 - INFO -   Keywords: ['Maintenance', 'Service', 'Engine']
+2026-07-20 21:45:19,494 - INFO - [33/50] https://www.ainonline.com/aviation-news/popular
+2026-07-20 21:45:23,753 - INFO - ✓ MATCH: Popular | Aviation International News...
+2026-07-20 21:45:23,754 - INFO -   Keywords: ['Maintenance', 'Service', 'Engine']
+2026-07-20 21:45:23,754 - INFO - [34/50] https://www.ainonline.com/section/aerospace-air-transport
+2026-07-20 21:45:30,544 - INFO - ✓ MATCH: Aerospace & Air Transport...
+2026-07-20 21:45:30,545 - INFO -   Keywords: ['Maintenance', 'Engine', 'engine', 'Service', 'service', 'Support']
+2026-07-20 21:45:30,546 - INFO - [35/50] https://www.ainonline.com/print/july-2026
+2026-07-20 21:45:34,789 - INFO - ✓ MATCH: Aviation International News...
+2026-07-20 21:45:34,790 - INFO -   Keywords: ['Maintenance', 'Service', 'Engine']
+2026-07-20 21:45:34,790 - INFO - [36/50] https://www.ainonline.com/aviation-news/latest
+2026-07-20 21:45:39,098 - INFO - ✓ MATCH: Latest | Aviation International News...
+2026-07-20 21:45:39,099 - INFO -   Keywords: ['Maintenance', 'Engine', 'Overhaul Contract', 'engine', 'service', 'contract', 'Support', 'Agreement']
+2026-07-20 21:45:39,099 - INFO - [37/50] https://www.ainonline.com/categories
+2026-07-20 21:45:42,162 - INFO - ✓ MATCH: All Categories | Aviation International News...
+2026-07-20 21:45:42,163 - INFO -   Keywords: ['Maintenance', 'Service', 'Engine']
+2026-07-20 21:45:42,163 - INFO - [38/50] https://www.ainonline.com/aviation-news/general-aviation/2026-07-19/hartzell-adds-frontier-and-navig
+2026-07-20 21:45:46,221 - INFO - ✓ MATCH: Hartzell Propeller Adds Frontier and Navigator Top Prop STC ...
+2026-07-20 21:45:46,222 - INFO -   Keywords: ['Maintenance', 'repair', 'Service', 'MRO', 'Support']
+2026-07-20 21:45:46,223 - INFO - [39/50] https://www.ainonline.com/aviation-news/business-aviation/2026-07-13/das-aviation-adds-heat-exchange
+2026-07-20 21:45:49,217 - INFO - ✓ MATCH: DAS Aviation Adds Heat Exchanger Service for Cessna Jets  | ...
+2026-07-20 21:45:49,217 - INFO -   Keywords: ['Maintenance', 'repair', 'Service', 'service', 'MRO', 'Support']
+2026-07-20 21:45:49,218 - INFO - [40/50] https://www.ainonline.com/aviation-news/business-aviation/2026-07-08/jet-access-maintenance-earns-st
+2026-07-20 21:45:53,006 - INFO - ✓ MATCH: Jet Access Maintenance Becomes Authorized Starlink Aviation ...
+2026-07-20 21:45:53,007 - INFO -   Keywords: ['Maintenance', 'engine', 'overhaul', 'Service', 'service', 'support']
+2026-07-20 21:45:53,007 - INFO - [41/50] https://www.ainonline.com/channel/maintenance?page=0
+2026-07-20 21:45:57,758 - INFO - ✓ MATCH: Maintenance and Modifications...
+2026-07-20 21:45:57,759 - INFO -   Keywords: ['Maintenance', 'Engine', 'repair', 'maintenance', 'engine', 'overhaul', 'Service', 'MRO', 'Support', 'support']
+2026-07-20 21:45:57,759 - INFO - [42/50] https://www.ainonline.com/contact-us
+2026-07-20 21:46:01,118 - INFO - ✓ MATCH: Contact Us | Aviation International News...
+2026-07-20 21:46:01,118 - INFO -   Keywords: ['Maintenance', 'Service', 'Engine']
+2026-07-20 21:46:01,118 - INFO - [43/50] https://www.ainonline.com/channel/unmanned-aerial-vehicles
+2026-07-20 21:46:07,859 - INFO - ✓ MATCH: Unmanned Aerial Vehicles...
+2026-07-20 21:46:07,861 - INFO -   Keywords: ['Maintenance', 'engine', 'Support', 'Engine']
+2026-07-20 21:46:07,862 - INFO - [44/50] https://www.ainonline.com/reports
+2026-07-20 21:46:13,807 - INFO - ✓ MATCH: In-Depth Reports...
+2026-07-20 21:46:13,807 - INFO -   Keywords: ['Maintenance', 'Engine', 'engine', 'Service', 'Support', 'support']
+2026-07-20 21:46:13,808 - INFO - [45/50] https://www.ainonline.com/channel/avionics
+2026-07-20 21:46:19,625 - INFO - ✓ MATCH: Avionics | Aviation International News...
+2026-07-20 21:46:19,626 - INFO -   Keywords: ['Maintenance', 'Engine', 'engine', 'Service', 'MRO']
+2026-07-20 21:46:19,626 - INFO - [46/50] https://www.ainonline.com/archive
+2026-07-20 21:46:22,405 - INFO - ✓ MATCH: Content Archive | Aviation International News...
+2026-07-20 21:46:22,405 - INFO -   Keywords: ['Maintenance', 'Service', 'Engine']
+2026-07-20 21:46:22,406 - INFO - [47/50] https://www.ainonline.com/aviation-news/video/turbulence-canceling-technology-could-make-skies-smoot
+2026-07-20 21:46:27,235 - INFO - ✓ MATCH: Turbulence Canceling Technology Could Make the Skies Smoothe...
+2026-07-20 21:46:27,237 - INFO -   Keywords: ['Maintenance', 'Engine', 'repair', 'Service', 'MRO', 'Support']
+2026-07-20 21:46:27,239 - INFO - [48/50] https://www.ainonline.com/aviation-news/video
+2026-07-20 21:46:31,589 - INFO - ✓ MATCH: Videos | Aviation International News...
+2026-07-20 21:46:31,589 - INFO -   Keywords: ['Maintenance', 'Service', 'Engine']
+2026-07-20 21:46:31,589 - INFO - [49/50] https://www.ainonline.com/legal/privacy-policy
+2026-07-20 21:46:34,941 - INFO - ✓ MATCH: Privacy Policy of AIN Media Group, Inc...
+2026-07-20 21:46:34,941 - INFO -   Keywords: ['service', 'Maintenance', 'Service', 'Engine']
+2026-07-20 21:46:34,941 - INFO - [50/50] https://www.ainonline.com/section/general-aviation
+2026-07-20 21:46:40,760 - INFO - ✓ MATCH: General Aviation...
+2026-07-20 21:46:40,761 - INFO -   Keywords: ['Maintenance', 'Engine', 'Overhaul', 'engine', 'service', 'Contract']
+2026-07-20 21:46:40,762 - INFO - Found 50 matching articles from https://www.ainonline.com/channel/maintenance
+2026-07-20 21:46:40,762 - INFO - 
+✓ https://www.ainonline.com/channel/maintenance: 50 articles found
+
+2026-07-20 21:46:44,036 - INFO - 
+Site 3/8: https://www.mroglobal-online.com/mro-directory/
+2026-07-20 21:46:44,037 - INFO - 
+==================================================
+Scraping: https://www.mroglobal-online.com/mro-directory/
+==================================================
+2026-07-20 21:46:46,309 - INFO - Extracted 14 total links from page
+2026-07-20 21:46:46,310 - INFO - Processing 14 articles...
+2026-07-20 21:46:46,310 - INFO - [1/14] https://www.mroglobal-online.com/account
+2026-07-20 21:46:52,362 - INFO - ✓ MATCH: Login - MRO Global...
+2026-07-20 21:46:52,363 - INFO -   Keywords: ['support', 'MRO']
+2026-07-20 21:46:52,364 - INFO - [2/14] https://www.mroglobal-online.com/mro-slot-finder/
+2026-07-20 21:46:56,354 - INFO - ✓ MATCH: MRO slot finder...
+2026-07-20 21:46:56,355 - INFO -   Keywords: ['support', 'MRO']
+2026-07-20 21:46:56,355 - INFO - [3/14] https://www.mroglobal-online.com/about/
+2026-07-20 21:47:00,399 - INFO - ✓ MATCH: About - MRO Global...
+2026-07-20 21:47:00,401 - INFO -   Keywords: ['Maintenance', 'Engine', 'engine', 'Service', 'service', 'MRO', 'support']
+2026-07-20 21:47:00,401 - INFO - [4/14] https://www.mroglobal-online.com/contact/
+2026-07-20 21:47:03,952 - INFO - ✓ MATCH: Contact Us - MRO Global...
+2026-07-20 21:47:03,953 - INFO -   Keywords: ['support', 'MRO']
+2026-07-20 21:47:03,954 - INFO - [5/14] https://www.mroglobal-online.com/
+2026-07-20 21:47:07,540 - INFO - ✓ MATCH: Your one-stop-shop for all major maintenance, repair & overh...
+2026-07-20 21:47:07,541 - INFO -   Keywords: ['repair', 'maintenance', 'overhaul', 'MRO', 'support']
+2026-07-20 21:47:07,541 - INFO - [6/14] https://www.mroglobal-online.com/request-mro-details-update/
+2026-07-20 21:47:11,408 - INFO - ✓ MATCH: Request MRO details update...
+2026-07-20 21:47:11,408 - INFO -   Keywords: ['support', 'MRO']
+2026-07-20 21:47:11,408 - INFO - [7/14] https://www.mroglobal-online.com/interested-member-registration/
+2026-07-20 21:47:15,286 - INFO - ✓ MATCH: Interested member registration...
+2026-07-20 21:47:15,287 - INFO -   Keywords: ['support', 'MRO']
+2026-07-20 21:47:15,287 - INFO - [8/14] https://www.mroglobal-online.com
+2026-07-20 21:47:18,969 - INFO - ✓ MATCH: Your one-stop-shop for all major maintenance, repair & overh...
+2026-07-20 21:47:19,010 - INFO -   Keywords: ['repair', 'maintenance', 'overhaul', 'MRO', 'support']
+2026-07-20 21:47:19,019 - INFO - [9/14] https://www.mroglobal-online.com/account-register/
+2026-07-20 21:47:23,495 - INFO - ✓ MATCH: Register - MRO Global...
+2026-07-20 21:47:23,496 - INFO -   Keywords: ['support', 'MRO']
+2026-07-20 21:47:23,496 - INFO - [10/14] https://www.mroglobal-online.com/account-register
+2026-07-20 21:47:27,234 - INFO - ✓ MATCH: Register - MRO Global...
+2026-07-20 21:47:27,234 - INFO -   Keywords: ['support', 'MRO']
+2026-07-20 21:47:27,234 - INFO - [11/14] https://www.mroglobal-online.com/mro-listing-form/
+2026-07-20 21:47:30,508 - INFO - ✓ MATCH: Mro listing form...
+2026-07-20 21:47:30,508 - INFO -   Keywords: ['Mro', 'support', 'MRO']
+2026-07-20 21:47:30,508 - INFO - [12/14] https://www.mroglobal-online.com/logistics/
+2026-07-20 21:47:34,282 - INFO - ✓ MATCH: Logistics - MRO Global...
+2026-07-20 21:47:34,282 - INFO -   Keywords: ['support', 'MRO']
+2026-07-20 21:47:34,283 - INFO - [13/14] https://www.mroglobal-online.com/list-your-mro/
+2026-07-20 21:47:37,723 - INFO - ✓ MATCH: List Your MRO...
+2026-07-20 21:47:37,723 - INFO -   Keywords: ['Maintenance', 'Engine', 'support', 'MRO']
+2026-07-20 21:47:37,724 - INFO - [14/14] https://www.mroglobal-online.com/why-register
+2026-07-20 21:47:42,507 - INFO - ✓ MATCH: Membership...
+2026-07-20 21:47:42,508 - INFO -   Keywords: ['service']
+2026-07-20 21:47:42,509 - INFO - Found 14 matching articles from https://www.mroglobal-online.com/mro-directory/
+2026-07-20 21:47:42,509 - INFO - 
+✓ https://www.mroglobal-online.com/mro-directory/: 14 articles found
+
+2026-07-20 21:47:45,432 - INFO - 
+Site 4/8: https://simpleflying.com/
+2026-07-20 21:47:45,433 - INFO - 
+==================================================
+Scraping: https://simpleflying.com/
+==================================================
+2026-07-20 21:47:48,073 - INFO - Extracted 70 total links from page
+2026-07-20 21:47:48,073 - INFO - Processing 50 articles...
+2026-07-20 21:47:48,074 - INFO - [1/50] https://simpleflying.com/why-canada-values-saab-source-code-access-more-than-f-35/
+2026-07-20 21:47:51,809 - INFO - ✓ MATCH: Why Canada Suddenly Values Saab's Source Code Access More Th...
+2026-07-20 21:47:51,809 - INFO -   Keywords: ['contract', 'maintenance', 'service']
+2026-07-20 21:47:51,809 - INFO - [2/50] https://simpleflying.com/expert-opinions/
+2026-07-20 21:47:54,808 - INFO - ✓ MATCH: Expert Opinions...
+2026-07-20 21:47:54,809 - INFO -   Keywords: ['engine']
+2026-07-20 21:47:54,809 - INFO - [3/50] https://simpleflying.com/thread/would-you-pay-for-inflight-wifi/
+2026-07-20 21:47:58,157 - INFO - [4/50] https://simpleflying.com/video/sas-ceo-stolen-by-air-canada-anko-van-der-werff-to-be-president-ceo-o
+2026-07-20 21:48:01,080 - INFO - [5/50] https://simpleflying.com/seat-maps/airlines/
+2026-07-20 21:48:03,649 - INFO - [6/50] https://simpleflying.com/qatar-airways-16-hour-flights-to-major-us-city-2-weeks/
+2026-07-20 21:48:07,990 - INFO - ✓ MATCH: Qatar Airways Launches 16-Hour Nonstop Flights To Major US C...
+2026-07-20 21:48:07,990 - INFO -   Keywords: ['service', 'Service']
+2026-07-20 21:48:07,991 - INFO - [7/50] https://simpleflying.com/thread/thoughts-on-uniteds-twilight-bag-drop-concept/
+2026-07-20 21:48:10,877 - INFO - [8/50] https://simpleflying.com/flight-tracker/
+2026-07-20 21:48:13,920 - INFO - [9/50] https://simpleflying.com/united-airlines-launches-4-new-nonstop-routes-from-major-hub/
+2026-07-20 21:48:17,847 - INFO - [10/50] https://simpleflying.com/profile/CS334192/
+2026-07-20 21:48:21,110 - INFO - ✓ MATCH: NotEnoughLegRoom...
+2026-07-20 21:48:21,110 - INFO -   Keywords: ['service']
+2026-07-20 21:48:21,111 - INFO - [11/50] https://simpleflying.com/page/advertise/
+2026-07-20 21:48:25,575 - INFO - [12/50] https://simpleflying.com/emirates-confirms-massive-changes-to-12-airbus-a380-routes-in-september/
+2026-07-20 21:48:28,668 - INFO - ✓ MATCH: Emirates Confirms Massive Changes To 12 Airbus A380 Routes I...
+2026-07-20 21:48:28,668 - INFO -   Keywords: ['service']
+2026-07-20 21:48:28,668 - INFO - [13/50] https://simpleflying.com/smbc-boeing-737-max-order-farnborough/
+2026-07-20 21:48:31,977 - INFO - ✓ MATCH: Boeing Secures Huge 100-Jet 737 MAX Order From A Leasing Gia...
+2026-07-20 21:48:31,978 - INFO -   Keywords: ['service']
+2026-07-20 21:48:31,978 - INFO - [14/50] https://simpleflying.com/1st-time-60-years-boeing-build-737-outside-renton-why-matters/
+2026-07-20 21:48:35,006 - INFO - ✓ MATCH: For The 1st Time In 60 Years, Boeing Will Build The 737 Outs...
+2026-07-20 21:48:35,007 - INFO -   Keywords: ['support']
+2026-07-20 21:48:35,007 - INFO - [15/50] https://simpleflying.com/airlines-now-ripping-out-economy-seats-make-room-doored-first-class-suites/
+2026-07-20 21:48:38,577 - INFO - [16/50] https://simpleflying.com/riyadh-air-boeing-787-airbus-a350-order-farnborough/
+2026-07-20 21:48:41,623 - INFO - ✓ MATCH: Riyadh Air Firms Up Major Airbus A350 & Boeing 787 Orders...
+2026-07-20 21:48:41,624 - INFO -   Keywords: ['agreement', 'maintenance', 'service']
+2026-07-20 21:48:41,624 - INFO - [17/50] https://simpleflying.com/smbc-airbus-a320neo-order-farnborough/
+2026-07-20 21:48:44,578 - INFO - ✓ MATCH: Airbus Secures Massive 100-Jet A320neo Family Order From Maj...
+2026-07-20 21:48:44,578 - INFO -   Keywords: ['service']
+2026-07-20 21:48:44,579 - INFO - [18/50] https://simpleflying.com/why-usaf-quietly-flying-retired-f-117-stealth-jets-2034/
+2026-07-20 21:48:47,779 - INFO - ✓ MATCH: Why The US Air Force Is Quietly Flying Its Retired F-117 Ste...
+2026-07-20 21:48:47,779 - INFO -   Keywords: ['engine']
+2026-07-20 21:48:47,779 - INFO - [19/50] https://simpleflying.com/thread/given-the-choice-which-quadjet-would-you-fly/
+2026-07-20 21:48:51,086 - INFO - [20/50] https://simpleflying.com/iberia-eyes-flights-to-3-more-us-cities/
+2026-07-20 21:48:54,859 - INFO - ✓ MATCH: Iberia Eyes New Nonstop Flights To These 4 Major US Cities [...
+2026-07-20 21:48:54,860 - INFO -   Keywords: ['service', 'Engine']
+2026-07-20 21:48:54,860 - INFO - [21/50] https://simpleflying.com/qantas-100000-hours-reviving-final-desert-stored-airbus-a380-slat-broke-1st
+2026-07-20 21:48:57,859 - INFO - ✓ MATCH: Qantas Spent 100,000 Hours Reviving Its Final Desert-Stored ...
+2026-07-20 21:48:57,860 - INFO -   Keywords: ['maintenance', 'engine', 'overhaul', 'service', 'Service']
+2026-07-20 21:48:57,860 - INFO - [22/50] https://simpleflying.com/airline-introduced-premium-economy-to-world/
+2026-07-20 21:49:00,997 - INFO - ✓ MATCH: The Airline That Introduced Premium Economy To The World...
+2026-07-20 21:49:00,997 - INFO -   Keywords: ['engine', 'service']
+2026-07-20 21:49:00,997 - INFO - [23/50] https://simpleflying.com/why-kc-46-has-refueling-limitations/
+2026-07-20 21:49:04,282 - INFO - ✓ MATCH: Why The Boeing KC-46 Still Has Refueling Limitations With Se...
+2026-07-20 21:49:04,282 - INFO -   Keywords: ['contract', 'service', 'support']
+2026-07-20 21:49:04,283 - INFO - [24/50] https://simpleflying.com/premium/?ref=footer
+2026-07-20 21:49:07,505 - INFO - [25/50] https://simpleflying.com/page/media/
+2026-07-20 21:49:11,382 - INFO - ✓ MATCH: Media Coverage...
+2026-07-20 21:49:11,383 - INFO -   Keywords: ['Maintenance', 'Contract']
+2026-07-20 21:49:11,383 - INFO - [26/50] https://simpleflying.com/longest-running-military-aircraft-production-lines/
+2026-07-20 21:49:14,993 - INFO - ✓ MATCH: The 5 Longest-Running Military Aircraft Production Lines Sti...
+2026-07-20 21:49:14,993 - INFO -   Keywords: ['service']
+2026-07-20 21:49:14,993 - INFO - [27/50] https://simpleflying.com/profile/AW047884/
+2026-07-20 21:49:18,047 - INFO - ✓ MATCH: Abid | Simple Flying Profile...
+2026-07-20 21:49:18,048 - INFO -   Keywords: ['engine', 'service', 'agreement']
+2026-07-20 21:49:18,049 - INFO - [28/50] https://simpleflying.com/usaf-pouring-20-acres-concrete-guam-andersen-afb-refuse-build-shelters/
+2026-07-20 21:49:22,207 - INFO - ✓ MATCH: The US Air Force Is Pouring 20 Acres Of Concrete At Guam's A...
+2026-07-20 21:49:22,207 - INFO -   Keywords: ['engine', 'support']
+2026-07-20 21:49:22,207 - INFO - [29/50] https://simpleflying.com/c-130-carrier-landing-record/
+2026-07-20 21:49:25,587 - INFO - ✓ MATCH: Why A C-130 Hercules Landing On A US Navy Carrier Deck In 19...
+2026-07-20 21:49:25,588 - INFO -   Keywords: ['engine', 'service', 'support']
+2026-07-20 21:49:25,588 - INFO - [30/50] https://simpleflying.com/page/about/
+2026-07-20 21:49:28,997 - INFO - [31/50] https://simpleflying.com/thread/why-is-finnair-only-airline-flying-to-america-from-helsinki/
+2026-07-20 21:49:32,851 - INFO - [32/50] https://simpleflying.com/boeing-all-new-jet-max-10-777-9-certification/
+2026-07-20 21:49:36,875 - INFO - ✓ MATCH: Boeing Will Shift Engineers To 1st All-New Jet In 2 Decades ...
+2026-07-20 21:49:36,876 - INFO -   Keywords: ['engine', 'Engine', 'support']
+2026-07-20 21:49:36,876 - INFO - [33/50] https://simpleflying.com/thread/given-the-choice-which-general-aviation-aircraft-would-you-like-to-f
+2026-07-20 21:49:40,645 - INFO - [34/50] https://simpleflying.com/video/what-american-airlines-should-have-done-starlux-airlines-receives-sil
+2026-07-20 21:49:43,571 - INFO - [35/50] https://simpleflying.com/contact/
+2026-07-20 21:49:46,797 - INFO - ✓ MATCH: Contact Simple Flying...
+2026-07-20 21:49:46,797 - INFO -   Keywords: ['Support']
+2026-07-20 21:49:46,798 - INFO - [36/50] https://simpleflying.com/airbus-threads/
+2026-07-20 21:49:50,127 - INFO - ✓ MATCH: Airbus Threads...
+2026-07-20 21:49:50,128 - INFO -   Keywords: ['service']
+2026-07-20 21:49:50,128 - INFO - [37/50] https://simpleflying.com/how-breeze-airways-makes-money-routes-just-10-passengers-per-day-each-way/
+2026-07-20 21:49:53,762 - INFO - ✓ MATCH: How Breeze Airways Makes Money On Routes With Just 10 Passen...
+2026-07-20 21:49:53,763 - INFO -   Keywords: ['service', 'support']
+2026-07-20 21:49:53,763 - INFO - [38/50] https://simpleflying.com/aircraft-threads/
+2026-07-20 21:49:57,437 - INFO - ✓ MATCH: Aircraft Threads...
+2026-07-20 21:49:57,438 - INFO -   Keywords: ['engine']
+2026-07-20 21:49:57,438 - INFO - [39/50] https://simpleflying.com/philippine-airlines-boeing-787-order-farnborough/
+2026-07-20 21:50:01,065 - INFO - ✓ MATCH: Philippine Airlines Orders 15 Boeing 787s, Options For 5 Mor...
+2026-07-20 21:50:01,065 - INFO -   Keywords: ['maintenance', 'support']
+2026-07-20 21:50:01,065 - INFO - [40/50] https://simpleflying.com/archive/2/
+2026-07-20 21:50:04,098 - INFO - ✓ MATCH: Archive...
+2026-07-20 21:50:04,098 - INFO -   Keywords: ['service', 'engine', 'Service', 'Engine']
+2026-07-20 21:50:04,099 - INFO - [41/50] https://simpleflying.com/videos/
+2026-07-20 21:50:07,271 - INFO - ✓ MATCH: Videos | Simple Flying...
+2026-07-20 21:50:07,271 - INFO -   Keywords: ['Engine']
+2026-07-20 21:50:07,271 - INFO - [42/50] https://simpleflying.com/245am-red-eye-southwest-worst-flights/
+2026-07-20 21:50:10,855 - INFO - ✓ MATCH: 2:45 AM Red-Eye: Southwest Airlines' 5 Worst Flights To Avoi...
+2026-07-20 21:50:10,855 - INFO -   Keywords: ['service']
+2026-07-20 21:50:10,856 - INFO - [43/50] https://simpleflying.com/alegiant-air-boeing-757-analysis/
+2026-07-20 21:50:14,405 - INFO - ✓ MATCH: Hang On: Here's Why Allegiant Air Flew The Boeing 757...
+2026-07-20 21:50:14,408 - INFO -   Keywords: ['engine', 'maintenance', 'service']
+2026-07-20 21:50:14,411 - INFO - [44/50] https://simpleflying.com/why-airline-pilots-deliberately-shut-down-airbus-a320-engine-taxiing/
+2026-07-20 21:50:17,780 - INFO - ✓ MATCH: Why Airline Pilots Deliberately Shut Down An Airbus A320 Eng...
+2026-07-20 21:50:17,781 - INFO -   Keywords: ['engine', 'Engine']
+2026-07-20 21:50:17,781 - INFO - [45/50] https://simpleflying.com/video/riyadh-air-adds-28-more-787s-6-a350s-to-its-fleet-on-1st-day-of-farnb
+2026-07-20 21:50:20,949 - INFO - [46/50] https://simpleflying.com/5-airlines-with-premium-economy-seats-worlds-longest-legroom-2026/
+2026-07-20 21:50:24,506 - INFO - ✓ MATCH: 5 Airlines’ Premium Economy Seats With The World’s Longest L...
+2026-07-20 21:50:24,506 - INFO -   Keywords: ['service', 'Service', 'support']
+2026-07-20 21:50:24,506 - INFO - [47/50] https://simpleflying.com/airports-threads/
+2026-07-20 21:50:27,561 - INFO - ✓ MATCH: Airports Threads...
+2026-07-20 21:50:27,562 - INFO -   Keywords: ['engine', 'service', 'agreement']
+2026-07-20 21:50:27,562 - INFO - [48/50] https://simpleflying.com/qatar-airways-launches-2-major-new-long-haul-routes-in-1-day/
+2026-07-20 21:50:31,428 - INFO - ✓ MATCH: Qatar Airways Launches 2 Major New Long-Haul Routes In 1 Day...
+2026-07-20 21:50:31,428 - INFO -   Keywords: ['service', 'agreement', 'Service']
+2026-07-20 21:50:31,428 - INFO - [49/50] https://simpleflying.com/inside-airbus-a350-secret-room-26/
+2026-07-20 21:50:34,773 - INFO - ✓ MATCH: Insanely Modern: Inside The Airbus A350’s Secret Room Below ...
+2026-07-20 21:50:34,773 - INFO -   Keywords: ['engine', 'service']
+2026-07-20 21:50:34,773 - INFO - [50/50] https://simpleflying.com/profile/OI763059/
+2026-07-20 21:50:38,778 - INFO - ✓ MATCH: Aaron_SF | Simple Flying Profile...
+2026-07-20 21:50:38,778 - INFO -   Keywords: ['engine', 'service']
+2026-07-20 21:50:38,778 - INFO - Found 35 matching articles from https://simpleflying.com/
+2026-07-20 21:50:38,778 - INFO - 
+✓ https://simpleflying.com/: 35 articles found
+
+2026-07-20 21:50:42,412 - INFO - 
+Site 5/8: https://www.aerotime.aero/
+2026-07-20 21:50:42,413 - INFO - 
+==================================================
+Scraping: https://www.aerotime.aero/
+==================================================
+2026-07-20 21:50:44,312 - INFO - Extracted 53 total links from page
+2026-07-20 21:50:44,312 - INFO - Processing 50 articles...
+2026-07-20 21:50:44,312 - INFO - [1/50] https://www.aerotime.aero/articles/easyjet-billion-us-offer-apollo-castlelake
+2026-07-20 21:50:48,102 - INFO - ✓ MATCH: easyJet takeover thrown wide open by rival $7.6 billion US o...
+2026-07-20 21:50:48,102 - INFO -   Keywords: ['agreement']
+2026-07-20 21:50:48,102 - INFO - [2/50] https://www.aerotime.aero/why-choose-us
+2026-07-20 21:50:56,893 - INFO - ✓ MATCH: Why choose us? - AeroTime...
+2026-07-20 21:50:56,894 - INFO -   Keywords: ['Service Agreement', 'service', 'MRO']
+2026-07-20 21:50:56,894 - INFO - [3/50] https://www.aerotime.aero/articles/united-airlines-financial-resultssecond-quarter-2026
+2026-07-20 21:50:59,484 - INFO - [4/50] https://www.aerotime.aero/articles/cathays-i-can-fly-unites-hong-kong-mainland-china-students-in-avi
+2026-07-20 21:51:02,959 - INFO - ✓ MATCH: Cathay’s I Can Fly unites Hong Kong, mainland China students...
+2026-07-20 21:51:02,969 - INFO -   Keywords: ['engine', 'Engine', 'service', 'support']
+2026-07-20 21:51:02,978 - INFO - [5/50] https://www.aerotime.aero/events
+2026-07-20 21:51:08,527 - INFO - ✓ MATCH: Events - AeroTime...
+2026-07-20 21:51:08,528 - INFO -   Keywords: ['Engine', 'MRO']
+2026-07-20 21:51:08,529 - INFO - [6/50] https://www.aerotime.aero/video
+2026-07-20 21:51:13,846 - INFO - [7/50] https://www.aerotime.aero/articles/philippine-airlines-orders-boeing-787-dreamliner-order-farnboroug
+2026-07-20 21:51:16,662 - INFO - ✓ MATCH: Philippine Airlines confirms speculation with Boeing 787 Dre...
+2026-07-20 21:51:16,662 - INFO -   Keywords: ['agreement', 'support']
+2026-07-20 21:51:16,662 - INFO - [8/50] https://www.aerotime.aero/articles/airbus-workers-in-spain-go-on-strike-until-end-of-july
+2026-07-20 21:51:19,220 - INFO - [9/50] https://www.aerotime.aero/articles/smbc-places-additional-order-with-airbus-for-100-a320neo-family-a
+2026-07-20 21:51:22,109 - INFO - [10/50] https://www.aerotime.aero/market-overview
+2026-07-20 21:51:27,396 - INFO - ✓ MATCH: Market overview - AeroTime...
+2026-07-20 21:51:27,396 - INFO -   Keywords: ['engine', 'AirAsia']
+2026-07-20 21:51:27,399 - INFO - [11/50] https://www.aerotime.aero/articles/cfm-international-rise-program-engine-farnborough-airshow-2026
+2026-07-20 21:51:30,579 - INFO - ✓ MATCH: CFM’s confidence on open-fan engine grows with series of RIS...
+2026-07-20 21:51:30,579 - INFO -   Keywords: ['engine', 'maintenance', 'Engine']
+2026-07-20 21:51:30,579 - INFO - [12/50] https://www.aerotime.aero/articles/boeing-sees-demand-for-2-4m-aviation-professionals-in-20-years
+2026-07-20 21:51:33,911 - INFO - ✓ MATCH: Boeing sees demand for 2.4M aviation professionals in 20 yea...
+2026-07-20 21:51:33,911 - INFO -   Keywords: ['maintenance', 'Service', 'service', 'support']
+2026-07-20 21:51:33,912 - INFO - [13/50] https://www.aerotime.aero/latest-news
+2026-07-20 21:51:37,373 - INFO - ✓ MATCH: Latest News - AeroTime...
+2026-07-20 21:51:37,374 - INFO -   Keywords: ['engine', 'Service']
+2026-07-20 21:51:37,374 - INFO - [14/50] https://www.aerotime.aero/articles/blue-angels-pilot-low-pass-pensacola-beach
+2026-07-20 21:51:39,995 - INFO - ✓ MATCH: Actions of Blue Angels pilot called into question over low p...
+2026-07-20 21:51:39,995 - INFO -   Keywords: ['service']
+2026-07-20 21:51:39,996 - INFO - [15/50] https://www.aerotime.aero/careers
+2026-07-20 21:51:43,954 - INFO - ✓ MATCH: Careers - AeroTime...
+2026-07-20 21:51:43,965 - INFO -   Keywords: ['Support', 'support']
+2026-07-20 21:51:43,974 - INFO - [16/50] https://www.aerotime.aero/cookie-policy
+2026-07-20 21:51:47,774 - INFO - ✓ MATCH: Cookie policy...
+2026-07-20 21:51:47,776 - INFO -   Keywords: ['service']
+2026-07-20 21:51:47,776 - INFO - [17/50] https://www.aerotime.aero/articles/airlines-will-need-nearly-44000-new-jets-by-2045-boeing
+2026-07-20 21:51:51,328 - INFO - [18/50] https://www.aerotime.aero/articles/easyjet-fleet-model-acmi
+2026-07-20 21:51:55,214 - INFO - ✓ MATCH: Why easyJet could benefit from a more flexible fleet model...
+2026-07-20 21:51:55,214 - INFO -   Keywords: ['Maintenance']
+2026-07-20 21:51:55,215 - INFO - [19/50] https://www.aerotime.aero/articles/top-10-cheapest-planes-in-the-world
+2026-07-20 21:51:58,830 - INFO - ✓ MATCH: The 10 cheapest planes you can buy in 2026...
+2026-07-20 21:51:58,831 - INFO -   Keywords: ['maintenance']
+2026-07-20 21:51:58,831 - INFO - [20/50] https://www.aerotime.aero/daily-newsletter
+2026-07-20 21:52:02,158 - INFO - [21/50] https://www.aerotime.aero/articles/uks-national-police-air-service-orders-two-more-h135s-brings-orde
+2026-07-20 21:52:05,311 - INFO - ✓ MATCH: UK’s National Police Air Service orders two more H135s, brin...
+2026-07-20 21:52:05,311 - INFO -   Keywords: ['maintenance', 'Service', 'service', 'contract', 'support']
+2026-07-20 21:52:05,312 - INFO - [22/50] https://www.aerotime.aero/articles/easyjet-wants-us-firm-castlelake-to-up-4-9b-takeover-bid-extends-
+2026-07-20 21:52:10,102 - INFO - [23/50] https://www.aerotime.aero/aerotime-insights
+2026-07-20 21:52:13,642 - INFO - [24/50] https://www.aerotime.aero/articles/smbc-orders-100-b737-max-aircraft-at-farnborough-airshow-2026
+2026-07-20 21:52:17,234 - INFO - ✓ MATCH: SMBC orders 100 B737 MAX aircraft at Farnborough Airshow 202...
+2026-07-20 21:52:17,234 - INFO -   Keywords: ['support']
+2026-07-20 21:52:17,235 - INFO - [25/50] https://www.aerotime.aero/articles/best-fighter-jets
+2026-07-20 21:52:20,373 - INFO - ✓ MATCH: Revealed: Top 10 best fighter jets in the world in 2026...
+2026-07-20 21:52:20,374 - INFO -   Keywords: ['service']
+2026-07-20 21:52:20,374 - INFO - [26/50] https://www.aerotime.aero/articles/air-china-orders-a350-900s-a320neo-shenzhen-airlines
+2026-07-20 21:52:23,751 - INFO - ✓ MATCH: Air China orders 15 A350-900s with additional 40 A320neos fo...
+2026-07-20 21:52:23,751 - INFO -   Keywords: ['agreement', 'Shenzhen Airlines']
+2026-07-20 21:52:23,752 - INFO - [27/50] https://www.aerotime.aero/terms-of-use
+2026-07-20 21:52:29,057 - INFO - ✓ MATCH: Terms of use...
+2026-07-20 21:52:29,058 - INFO -   Keywords: ['contract', 'Service', 'service']
+2026-07-20 21:52:29,058 - INFO - [28/50] https://www.aerotime.aero/articles/vertical-aerospace-names-sigma-air-mobility-as-new-customer-at-fa
+2026-07-20 21:52:32,715 - INFO - ✓ MATCH: Vertical Aerospace names Sigma Air Mobility as new customer ...
+2026-07-20 21:52:32,716 - INFO -   Keywords: ['agreement', 'service']
+2026-07-20 21:52:32,716 - INFO - [29/50] https://www.aerotime.aero/articles/avia-solutions-group-appoints-aj-abedin-as-u-s-based-board-direct
+2026-07-20 21:52:36,479 - INFO - ✓ MATCH: Avia Solutions Group Appoints AJ Abedin as U.S. Based Board ...
+2026-07-20 21:52:36,480 - INFO -   Keywords: ['Maintenance', 'maintenance', 'engine', 'service', 'support']
+2026-07-20 21:52:36,480 - INFO - [30/50] https://www.aerotime.aero/articles/archer-and-anduril-unveil-jointly-developed-autonomous-hybrid-dua
+2026-07-20 21:52:39,307 - INFO - [31/50] https://www.aerotime.aero/my-profile
+2026-07-20 21:52:43,908 - INFO - [32/50] https://www.aerotime.aero/direct-marketing-terms
