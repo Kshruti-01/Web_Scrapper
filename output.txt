@@ -1,442 +1,217 @@
-============================================================
-AVIATION MRO WEB SCRAPER
-============================================================
+"""
+Core scraper class for MRO Web Scraper
+"""
 
- Starting scrape of 3 sites...
-Note: Some sites block scrapers. Using enhanced bypass methods
+import requests
+import time
+import random
+import urllib3
+from typing import List, Optional
+from urllib.parse import urljoin, urlparse
+from bs4 import BeautifulSoup
+from config.settings import KEYWORDS, REQUEST_DELAY, REQUEST_TIMEOUT, MAX_RETRIES
 
-2026-04-29 21:59:29,431 - INFO - Scraping: https://mrobusinesstoday.com/
-2026-04-29 21:59:34,802 - WARNING - Got 403 Forbidden, trying to bypass...
-2026-04-29 21:59:49,117 - INFO - Found 3 potential article links
-2026-04-29 21:59:49,117 - INFO - Processing: https://mrobusinesstoday.com/mro-of-the-month/
-2026-04-29 21:59:53,637 - INFO - Found: Category - MRO of the month...
-2026-04-29 21:59:56,038 - INFO - Processing: https://mrobusinesstoday.com/mro-innovation-of-the-month/
-2026-04-29 22:00:00,304 - WARNING - Got 403 Forbidden, trying to bypass...
-2026-04-29 22:00:01,629 - WARNING - Attempt 1 failed for https://mrobusinesstoday.com/mro-innovation-of-the-month/: 403 Forbidden - Blocked by website
-2026-04-29 22:00:09,665 - INFO - Found: Category - MRO Innovation of the Month...
-2026-04-29 22:00:13,184 - INFO - Processing: https://mrobusinesstoday.com/mag/2026/15-apr-2026/
-2026-04-29 22:00:15,658 - WARNING - Got 403 Forbidden, trying to bypass...
-2026-04-29 22:00:16,972 - WARNING - Attempt 1 failed for https://mrobusinesstoday.com/mag/2026/15-apr-2026/: 403 Forbidden - Blocked by website
-2026-04-29 22:00:25,024 - INFO - Completed https://mrobusinesstoday.com/: 2 articles found
-2026-04-29 22:00:30,224 - INFO - Scraping: https://www.ainonline.com/channel/maintenance
-2026-04-29 22:00:33,783 - WARNING - Attempt 1 failed for https://www.ainonline.com/channel/maintenance: HTTPSConnectionPool(host='www.ainonline.com', port=443): Max retries exceeded with url: /channel/maintenance (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))
-2026-04-29 22:00:40,216 - WARNING - Attempt 2 failed for https://www.ainonline.com/channel/maintenance: HTTPSConnectionPool(host='www.ainonline.com', port=443): Max retries exceeded with url: /channel/maintenance (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))
-2026-04-29 22:00:51,401 - WARNING - Attempt 3 failed for https://www.ainonline.com/channel/maintenance: HTTPSConnectionPool(host='www.ainonline.com', port=443): Max retries exceeded with url: /channel/maintenance (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))
-2026-04-29 22:00:51,401 - ERROR - Failed to fetch https://www.ainonline.com/channel/maintenance after 3 attempts
-2026-04-29 22:00:51,402 - INFO - Completed https://www.ainonline.com/channel/maintenance: 0 articles found
-2026-04-29 22:00:55,813 - INFO - Scraping: https://www.aviationbusinessnews.com/mro/latest-news-mro/
-2026-04-29 22:01:00,338 - WARNING - Attempt 1 failed for https://www.aviationbusinessnews.com/mro/latest-news-mro/: HTTPSConnectionPool(host='www.aviationbusinessnews.com', port=443): Max retries exceeded with url: /mro/latest-news-mro/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))
-2026-04-29 22:01:05,784 - WARNING - Attempt 2 failed for https://www.aviationbusinessnews.com/mro/latest-news-mro/: HTTPSConnectionPool(host='www.aviationbusinessnews.com', port=443): Max retries exceeded with url: /mro/latest-news-mro/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))
-2026-04-29 22:01:15,721 - WARNING - Attempt 3 failed for https://www.aviationbusinessnews.com/mro/latest-news-mro/: HTTPSConnectionPool(host='www.aviationbusinessnews.com', port=443): Max retries exceeded with url: /mro/latest-news-mro/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))
-2026-04-29 22:01:15,721 - ERROR - Failed to fetch https://www.aviationbusinessnews.com/mro/latest-news-mro/ after 3 attempts
-2026-04-29 22:01:15,721 - INFO - Completed https://www.aviationbusinessnews.com/mro/latest-news-mro/: 0 articles found
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
- Found 2 relevant articles
-
-============================================================
-ANALYTICAL SUMMARY
-============================================================
-
- Total Articles: 2
-
- Articles by Domain:
-mrobusinesstoday.com: 2
-
- Top Keywords Found:
- maintenance: 2 occurrences
- mro: 2 occurrences
-
-Data exported to:
- CSV: data/exports\mro_articles_20260429_220120.csv
- JSON: data/exports\mro_articles_20260429_220120.json
-
-Article Preview (first 5):
-   1. [mrobusinesstoday.com] Category - MRO of the month...
- Keywords: Maintenance, MRO
-   2. [mrobusinesstoday.com] Category - MRO Innovation of the Month...
- Keywords: MRO, maintenance
-
-============================================================
-Scraping completed!
-============================================================
+from src.models import ScraperConfig, Article
+from src.utils import (
+    setup_logging,
+    compile_keyword_pattern,
+    check_robots
+)
+from config.settings import MAX_ARTICLES_PER_SITE
 
 
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0",
+]
 
 
-============================================================
-AVIATION MRO WEB SCRAPER
-============================================================
-
- Starting scrape of 3 sites...
-Note: Some sites block scrapers. Using enhanced bypass methods
-
-2026-04-30 14:07:00,081 - INFO - Scraping: https://mrobusinesstoday.com/
-2026-04-30 14:07:03,933 - WARNING - Got 403 Forbidden, trying to bypass...
-2026-04-30 14:07:08,975 - INFO - Found 3 potential article links
-2026-04-30 14:07:08,975 - INFO - Processing: https://mrobusinesstoday.com/mro-innovation-of-the-month/
-2026-04-30 14:07:12,141 - WARNING - Got 403 Forbidden, trying to bypass...
-2026-04-30 14:07:16,209 - WARNING - Still blocked after bypass attempt
-2026-04-30 14:07:16,210 - WARNING - Could not access article: https://mrobusinesstoday.com/mro-innovation-of-the-month/
-2026-04-30 14:07:16,210 - INFO - Processing: https://mrobusinesstoday.com/mro-of-the-month/ 
-2026-04-30 14:07:21,585 - INFO - Found: Category - MRO of the month...
-2026-04-30 14:07:25,404 - INFO - Processing: https://mrobusinesstoday.com/mag/2026/15-apr-2026/
-2026-04-30 14:07:31,009 - WARNING - Got 403 Forbidden, trying to bypass...
-2026-04-30 14:07:37,400 - INFO - Completed https://mrobusinesstoday.com/: 1 articles found
-2026-04-30 14:07:42,907 - INFO - Scraping: https://www.ainonline.com/channel/maintenance
-Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
-2026-04-30 14:07:48,862 - INFO - Found 0 potential article links
-2026-04-30 14:07:48,862 - INFO - Completed https://www.ainonline.com/channel/maintenance: 0 articles found
-2026-04-30 14:07:51,903 - INFO - Scraping: https://www.aviationbusinessnews.com/mro/latest-news-mro/
-Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
-2026-04-30 14:07:56,033 - INFO - Found 0 potential article links
-2026-04-30 14:07:56,033 - INFO - Completed https://www.aviationbusinessnews.com/mro/latest-news-mro/: 0 articles found
-
- Found 1 relevant articles
-
-============================================================
-ANALYTICAL SUMMARY
-============================================================
-
- Total Articles: 1
-
- Articles by Domain:
-mrobusinesstoday.com: 1
-
- Top Keywords Found:
- maintenance: 1 occurrences
- mro: 1 occurrences
-
-Data exported to:
- CSV: data/exports\mro_articles_20260430_140759.csv
- JSON: data/exports\mro_articles_20260430_140759.json
-
-Article Preview (first 5):
-   1. [mrobusinesstoday.com] Category - MRO of the month...
- Keywords: Maintenance, MRO
-
-============================================================
-Scraping completed!
-============================================================
-
-
-venv) PS C:\Users\850085869\OneDrive - Genpact\Desktop\Project\mro_scraper> python main.py
-============================================================
-AVIATION MRO WEB SCRAPER
-============================================================
-
- Starting scrape...
-============================================================
-
-📻 Attempting RSS Feeds (always accessible)...
-2026-04-30 14:28:48,448 - INFO - Fetching RSS: https://news.google.com/rss/search?q=MRO+maintenance+repair+overhaul+aviation&hl=en-US&gl=US&ceid=US:en
-2026-04-30 14:28:49,165 - ERROR - Failed to fetch RSS feed https://news.google.com/rss/search?q=MRO+maintenance+repair+overhaul+aviation&hl=en-US&gl=US&ceid=US:en: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=MRO+maintenance+repair+overhaul+aviation&hl=en-US&gl=US&ceid=US:en (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))
-2026-04-30 14:28:49,165 - INFO - Fetching RSS: https://news.google.com/rss/search?q=aircraft+engine+service+agreement+contract&hl=en-US&gl=US&ceid=US:en
-2026-04-30 14:28:49,731 - ERROR - Failed to fetch RSS feed https://news.google.com/rss/search?q=aircraft+engine+service+agreement+contract&hl=en-US&gl=US&ceid=US:en: HTTPSConnectionPool(host='news.google.com', port=443): Max retries exceeded with url: /rss/search?q=aircraft+engine+service+agreement+contract&hl=en-US&gl=US&ceid=US:en (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')))
-
- Attempting regular websites...
-2026-04-30 14:28:49,747 - INFO - Scraping: https://mrobusinesstoday.com/
-2026-04-30 14:28:53,049 - WARNING - Got 403 Forbidden on attempt 1
-2026-04-30 14:29:00,627 - WARNING - Got 403 Forbidden on attempt 2
-2026-04-30 14:29:09,043 - INFO - Found 20 potential article links
-2026-04-30 14:29:09,043 - INFO - Processing: https://mrobusinesstoday.com/swiss-elevates-the-korea-europe-experience-with-a350-debut-and-swiss-se...
-2026-04-30 14:29:12,774 - WARNING - Got 403 Forbidden on attempt 1
-2026-04-30 14:29:18,618 - WARNING - Got 403 Forbidden on attempt 2
-2026-04-30 14:29:26,769 - INFO -  Found: SWISS Elevates the Korea–Europe Experience with A350 Debut and ‘SWISS Senses’...
-2026-04-30 14:29:29,125 - INFO - Processing: https://mrobusinesstoday.com/latam-airlines-taps-rolls-royce-to-power-boeing-787-fleet-expansion/...
-2026-04-30 14:29:32,898 - WARNING - Got 403 Forbidden on attempt 1
-2026-04-30 14:29:40,215 - WARNING - Got 403 Forbidden on attempt 2
-2026-04-30 14:29:48,152 - INFO -  Found: LATAM Airlines taps Rolls-Royce to power Boeing 787 fleet expansion...
-2026-04-30 14:29:51,800 - INFO - Processing: https://mrobusinesstoday.com/category/latest-news/feature-stories/...
-2026-04-30 14:29:56,912 - INFO -  Found: Category - Feature...
-2026-04-30 14:30:00,405 - INFO - Processing: https://mrobusinesstoday.com/honeywell-aerospace-unveils-strategic-board-ahead-of-june-2026-spin-off...
-2026-04-30 14:30:03,745 - WARNING - Got 403 Forbidden on attempt 1
-2026-04-30 14:30:11,788 - INFO -  Found: Honeywell Aerospace unveils strategic Board ahead of June 2026 spin-off...
-2026-04-30 14:30:14,705 - INFO - Processing: https://mrobusinesstoday.com/boeing-expands-737-max-footprint-with-everett-north-line-signalling-str...
-2026-04-30 14:30:18,316 - INFO -  Found: Boeing expands 737 MAX footprint with Everett North Line signalling strategic pr...
-2026-04-30 14:30:21,327 - INFO - Processing: https://mrobusinesstoday.com/cabin-mro-comes-of-age-as-regent-aerospace-bets-big-on-kuwait-as-its-mi...
-2026-04-30 14:30:24,497 - INFO -  Found: Cabin MRO comes of age as Regent Aerospace bets big on Kuwait as its Middle East...
-2026-04-30 14:30:27,325 - INFO - Processing: https://mrobusinesstoday.com/aiesl-eyes-global-mro-expansion-through-nagpur-as-india-strengthens-mro...
-2026-04-30 14:30:31,144 - WARNING - Got 403 Forbidden on attempt 1
-2026-04-30 14:30:38,624 - WARNING - Got 403 Forbidden on attempt 2
-2026-04-30 14:30:46,157 - WARNING - Got 403 Forbidden on attempt 3
-2026-04-30 14:30:46,157 - WARNING - Could not access article
-2026-04-30 14:30:46,158 - INFO - Processing: https://mrobusinesstoday.com/latest-news/feature-stories/...
-2026-04-30 14:30:48,960 - WARNING - Got 403 Forbidden on attempt 1
-2026-04-30 14:30:57,537 - WARNING - Got 403 Forbidden on attempt 2
-2026-04-30 14:31:06,035 - WARNING - Got 403 Forbidden on attempt 3
-2026-04-30 14:31:06,036 - WARNING - Could not access article
-2026-04-30 14:31:06,036 - INFO - Processing: https://mrobusinesstoday.com/aiesl-strengthens-structural-repair-capabilities-with-dgca-approval-at-...
-2026-04-30 14:31:09,268 - WARNING - Got 403 Forbidden on attempt 1
-2026-04-30 14:31:16,994 - INFO -  Found: AIESL strengthens structural repair capabilities with DGCA approval at Trivandru...
-2026-04-30 14:31:19,816 - INFO - Processing: https://mrobusinesstoday.com/coltala-aerospace-appoints-phil-bathurst-as-president-to-lead-mro-expan...
-2026-04-30 14:31:25,055 - INFO -  Found: Coltala Aerospace appoints Phil Bathurst as president to lead MRO expansion...
-2026-04-30 14:31:28,201 - INFO - Completed https://mrobusinesstoday.com/: 8 articles
-2026-04-30 14:31:32,796 - INFO - Scraping: https://www.ainonline.com/channel/maintenance
-Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
-2026-04-30 14:31:37,314 - INFO - No links with standard selectors, using fallback method
-2026-04-30 14:31:37,314 - INFO - Found 0 potential article links
-2026-04-30 14:31:37,314 - INFO - Completed https://www.ainonline.com/channel/maintenance: 0 articles
-2026-04-30 14:31:41,489 - INFO - Scraping: https://www.aviationbusinessnews.com/mro/latest-news-mro/
-Some characters could not be decoded, and were replaced with REPLACEMENT CHARACTER.
-2026-04-30 14:31:47,969 - INFO - No links with standard selectors, using fallback method
-2026-04-30 14:31:47,970 - INFO - Found 0 potential article links
-2026-04-30 14:31:47,970 - INFO - Completed https://www.aviationbusinessnews.com/mro/latest-news-mro/: 0 articles
-
- Total articles found: 8
-
-============================================================
-ANALYTICAL SUMMARY
-============================================================
-
- Total Articles: 8
-
- Articles by Domain:
- mrobusinesstoday.com: 8
-
- Top Keywords Found:
- mro: 8 occurrences
- maintenance: 8 occurrences
- support: 6 occurrences
- repair: 5 occurrences
- service: 3 occurrences
- overhaul: 2 occurrences
- engine: 2 occurrences
- agreement: 1 occurrences
-
- Data exported to:
- CSV: data/exports\mro_articles_20260430_143152.csv
- JSON: data/exports\mro_articles_20260430_143152.json
-
-Article Preview (first 10):
-   1. [mrobusinesstoday.com] SWISS Elevates the Korea–Europe Experience with A350 Debut and ‘SWISS Senses’...
- Keywords: service, MRO, support
-   2. [mrobusinesstoday.com] LATAM Airlines taps Rolls-Royce to power Boeing 787 fleet expansion...
- Keywords: maintenance, service, MRO, Overhaul, Repair
-   3. [mrobusinesstoday.com] Category - Feature...
- Keywords: Repair, MRO, Overhaul, Maintenance
-   4. [mrobusinesstoday.com] Honeywell Aerospace unveils strategic Board ahead of June 2026 spin-off...
- Keywords: maintenance, MRO, support
-   5. [mrobusinesstoday.com] Boeing expands 737 MAX footprint with Everett North Line signalling strategic pr...
- Keywords: maintenance, MRO, support
-   6. [mrobusinesstoday.com] Cabin MRO comes of age as Regent Aerospace bets big on Kuwait as its Middle East...
- Keywords: maintenance, MRO, service, repair, agreement
-   7. [mrobusinesstoday.com] AIESL strengthens structural repair capabilities with DGCA approval at Trivandru...
- Keywords: maintenance, MRO, repair, Repair, Maintenance
-   8. [mrobusinesstoday.com] Coltala Aerospace appoints Phil Bathurst as president to lead MRO expansion...
- Keywords: MRO
-
-============================================================
-Scraping completed!
-============================================================
-
-
-============================================================
-MRO WEB SCRAPER
-============================================================
-
- Starting scrape of 4 sites...
-============================================================
-2026-05-01 16:44:53,454 - INFO -
-==================================================
-Scraping: https://mrobusinesstoday.com/
-==================================================
-2026-05-01 16:44:55,166 - WARNING - 403 on attempt 1, retrying...
-2026-05-01 16:44:58,109 - INFO - Extracted 56 total links from page
-2026-05-01 16:44:58,109 - INFO - Processing 10 articles...
-2026-05-01 16:44:58,112 - INFO - [1/10] https://mrobusinesstoday.com/latam-airlines-taps-rolls-royce-to-power-boeing-787-fleet-expansion/
-2026-05-01 16:45:00,812 - INFO -  LATAM Airlines taps Rolls-Royce to power Boeing 787 fleet ex...
-2026-05-01 16:45:00,815 - INFO - Keywords: ['service', 'Overhaul', 'engine', 'Repair', 'MRO', 'maintenance', 'Maintenance', 'support']
-2026-05-01 16:45:00,816 - INFO - [2/10] https://mrobusinesstoday.com/airbus-earnings-slide-highlights-supply-chain-pressures/  
-2026-05-01 16:45:03,432 - WARNING - 403 on attempt 1, retrying...
-2026-05-01 16:45:05,879 - WARNING - 403 on attempt 2, retrying...
-2026-05-01 16:45:10,616 - INFO -  Airbus earnings slide highlights supply chain pressures...
-2026-05-01 16:45:10,617 - INFO - Keywords: ['service', 'engine', 'MRO', 'maintenance', 'support']
-2026-05-01 16:45:10,617 - INFO - [3/10] https://mrobusinesstoday.com/contact-us/
-2026-05-01 16:45:13,505 - WARNING - 403 on attempt 1, retrying...
-2026-05-01 16:45:16,256 - INFO -  Contact Us - MRO Business Today, Latest Aerospace News...
-2026-05-01 16:45:16,258 - INFO - Keywords: ['MRO']
-2026-05-01 16:45:16,260 - INFO - [4/10] https://mrobusinesstoday.com/how-is-amc-technology-building-the-backbone-of-a-homegrown-interiors-ec
-2026-05-01 16:45:18,399 - INFO -  How is AMC Technology building the backbone of a homegrown i...
-2026-05-01 16:45:18,400 - INFO - Keywords: ['MRO', 'maintenance', 'repair', 'support', 'component repair']
-2026-05-01 16:45:18,401 - INFO - [5/10] https://mrobusinesstoday.com/latest-news/engines/
-2026-05-01 16:45:21,804 - WARNING - 403 on attempt 1, retrying...
-2026-05-01 16:45:24,264 - WARNING - 403 on attempt 2, retrying...
-2026-05-01 16:45:28,683 - WARNING - 403 on attempt 3, retrying...
-2026-05-01 16:45:28,685 - INFO - [6/10] https://mrobusinesstoday.com/latest-news/interview/
-2026-05-01 16:45:31,612 - WARNING - 403 on attempt 1, retrying...
-2026-05-01 16:45:34,046 - WARNING - 403 on attempt 2, retrying...
-2026-05-01 16:45:38,562 - WARNING - 403 on attempt 3, retrying...
-2026-05-01 16:45:38,563 - INFO - [7/10] https://mrobusinesstoday.com/mro-of-the-month/
-2026-05-01 16:45:40,022 - WARNING - 403 on attempt 1, retrying...
-2026-05-01 16:45:42,436 - WARNING - 403 on attempt 2, retrying...
-2026-05-01 16:45:46,941 - WARNING - 403 on attempt 3, retrying...
-2026-05-01 16:45:46,942 - INFO - [8/10] https://mrobusinesstoday.com/latest-news/executive-focus/
-2026-05-01 16:45:49,041 - WARNING - 403 on attempt 1, retrying...
-2026-05-01 16:45:51,881 - INFO - [9/10] https://mrobusinesstoday.com/latest-news/aircraft-manufacturers/
-2026-05-01 16:45:54,516 - WARNING - 403 on attempt 1, retrying...
-2026-05-01 16:45:57,019 - WARNING - 403 on attempt 2, retrying...
-2026-05-01 16:46:01,435 - WARNING - 403 on attempt 3, retrying...
-2026-05-01 16:46:01,437 - INFO - [10/10] https://mrobusinesstoday.com/latest-news/event-news/
-2026-05-01 16:46:04,335 - WARNING - 403 on attempt 1, retrying...
-2026-05-01 16:46:07,152 - INFO -  Category - MRO-Events News...
-2026-05-01 16:46:07,155 - INFO - Keywords: ['MRO', 'maintenance']
-2026-05-01 16:46:07,156 - INFO -
- https://mrobusinesstoday.com/: 5 articles
-
-2026-05-01 16:46:09,738 - INFO - 
-==================================================
-Scraping: https://www.ainonline.com/channel/maintenance
-==================================================
-2026-05-01 16:46:11,114 - INFO - Extracted 74 total links from page
-2026-05-01 16:46:11,115 - INFO - Processing 10 articles...
-2026-05-01 16:46:11,115 - INFO - [1/10] https://www.ainonline.com/channel/maintenance?page=1
-2026-05-01 16:46:17,875 - INFO -  Maintenance and Modifications...
-2026-05-01 16:46:17,876 - INFO - Keywords: ['Overhaul', 'Service', 'engine', 'MRO', 'overhaul', 'maintenance', 'repair', 'Maintenance', 'support']
-2026-05-01 16:46:17,877 - INFO - [2/10] https://www.ainonline.com/aviation-news/business-aviation/2026-04-24/hop-jet-ntsb-final-report-accur
-2026-05-01 16:46:21,229 - INFO -  Hop-A-Jet: NTSB Final Report on CL604 Naples Crash Is ‘Accur...
-2026-05-01 16:46:21,229 - INFO - Keywords: ['Service', 'Maintenance', 'Engine', 'service']
-2026-05-01 16:46:21,230 - INFO - [3/10] https://www.ainonline.com/channel/cabin-interior-and-electronics
-2026-05-01 16:46:25,539 - INFO -  Cabin Interior and Electronics...
-2026-05-01 16:46:25,541 - INFO - Keywords: ['Maintenance', 'service']
-2026-05-01 16:46:25,542 - INFO - [4/10] https://www.ainonline.com/aircraft4sale
-2026-05-01 16:46:27,748 - INFO -  Aircraft Exchange | Aviation International News...
-2026-05-01 16:46:27,749 - INFO - Keywords: ['Service', 'Maintenance']
-2026-05-01 16:46:27,749 - INFO - [5/10] https://www.ainonline.com/aviation-news/business-aviation/2026-04-14/wildhorse-helicopters-bell-47-g
-2026-05-01 16:46:33,641 - INFO -  Wildhorse Helicopters Bell 47 Gets Full Night Vision Goggle ...
-2026-05-01 16:46:33,642 - INFO - Keywords: ['Engine', 'service', 'Service', 'engine', 'MRO', 'maintenance', 'Maintenance', 'Support']
-2026-05-01 16:46:33,642 - INFO - [6/10] https://www.ainonline.com/print/april-2026
-2026-05-01 16:46:36,239 - INFO -  Aviation International News...
-2026-05-01 16:46:36,239 - INFO - Keywords: ['Service', 'Maintenance']
-2026-05-01 16:46:36,241 - INFO - [7/10] https://www.ainonline.com/reports
-2026-05-01 16:46:40,224 - INFO -  In-Depth Reports...
-2026-05-01 16:46:40,225 - INFO - Keywords: ['Service', 'engine', 'Maintenance', 'support', 'Support']
-2026-05-01 16:46:40,225 - INFO - [8/10] https://www.ainonline.com/channel/unmanned-aerial-vehicles
-2026-05-01 16:46:45,084 - INFO -  Unmanned Aerial Vehicles...
-2026-05-01 16:46:45,084 - INFO - Keywords: ['Maintenance']
-2026-05-01 16:46:45,085 - INFO - [9/10] https://www.ainonline.com/futureflight
-2026-05-01 16:46:49,621 - INFO -  FutureFlight  | Aviation International News...
-2026-05-01 16:46:49,621 - INFO - Keywords: ['Service', 'engine', 'Contract', 'Maintenance', 'support']
-2026-05-01 16:46:49,623 - INFO - [10/10] https://www.ainonline.com/aviation-webinars
-2026-05-01 16:46:52,635 - INFO -  Webinars | Aviation International News...
-2026-05-01 16:46:52,635 - INFO - Keywords: ['Service', 'Maintenance']
-2026-05-01 16:46:52,637 - INFO -
- https://www.ainonline.com/channel/maintenance: 10 articles
-
-2026-05-01 16:46:55,848 - INFO - 
-==================================================
-Scraping: https://www.mroglobal-online.com/mro-directory/
-==================================================
-2026-05-01 16:46:58,543 - INFO - Extracted 15 total links from page
-2026-05-01 16:46:58,544 - INFO - Processing 10 articles...
-2026-05-01 16:46:58,544 - INFO - [1/10] https://www.mroglobal-online.com/request-mro-details-update/
-2026-05-01 16:47:01,125 - INFO -  Request MRO details update...
-2026-05-01 16:47:01,127 - INFO - Keywords: ['support', 'MRO']
-2026-05-01 16:47:01,128 - INFO - [2/10] https://www.mroglobal-online.com/logistics/
-2026-05-01 16:47:04,014 - INFO -  Logistics - MRO Global...
-2026-05-01 16:47:04,016 - INFO - Keywords: ['support', 'MRO']
-2026-05-01 16:47:04,016 - INFO - [3/10] https://www.mroglobal-online.com/list-your-mro/
-2026-05-01 16:47:06,644 - INFO -  List Your MRO...
-2026-05-01 16:47:06,646 - INFO - Keywords: ['Maintenance', 'Engine', 'support', 'MRO']
-2026-05-01 16:47:06,646 - INFO - [4/10] https://www.mroglobal-online.com/interested-member-registration/
-2026-05-01 16:47:09,590 - INFO -  Interested member registration...
-2026-05-01 16:47:09,590 - INFO - Keywords: ['support', 'MRO']
-2026-05-01 16:47:09,591 - INFO - [5/10] https://www.mroglobal-online.com
-2026-05-01 16:47:12,127 - INFO -  Your one-stop-shop for all major maintenance, repair & overh...
-2026-05-01 16:47:12,129 - INFO - Keywords: ['MRO', 'overhaul', 'maintenance', 'repair', 'support']
-2026-05-01 16:47:12,130 - INFO - [6/10] https://www.mroglobal-online.com/account-register
-2026-05-01 16:47:15,893 - INFO -  Register - MRO Global...
-2026-05-01 16:47:15,893 - INFO - Keywords: ['MRO']
-2026-05-01 16:47:15,893 - INFO - [7/10] https://www.mroglobal-online.com/about/
-2026-05-01 16:47:18,067 - INFO -  About - MRO Global...
-2026-05-01 16:47:18,070 - INFO - Keywords: ['Engine', 'engine', 'MRO', 'Maintenance', 'support']
-2026-05-01 16:47:18,071 - INFO - [8/10] https://www.mroglobal-online.com/contact/
-2026-05-01 16:47:21,905 - INFO -  Contact Us - MRO Global...
-2026-05-01 16:47:21,906 - INFO - Keywords: ['support', 'MRO']
-2026-05-01 16:47:21,906 - INFO - [9/10] https://www.mroglobal-online.com/privacy-policy/
-2026-05-01 16:47:25,861 - INFO -  Privacy Policy...
-2026-05-01 16:47:25,862 - INFO - Keywords: ['service']
-2026-05-01 16:47:25,862 - INFO - [10/10] https://www.mroglobal-online.com/account-register/
-2026-05-01 16:47:29,753 - INFO -  Register - MRO Global...
-2026-05-01 16:47:29,755 - INFO - Keywords: ['MRO']
-2026-05-01 16:47:29,756 - INFO -
- https://www.mroglobal-online.com/mro-directory/: 10 articles
-
-2026-05-01 16:47:33,174 - INFO - 
-==================================================
-Scraping: https://www.aviationbusinessnews.com/mro/latest-news-mro/
-==================================================
-2026-05-01 16:47:35,014 - INFO - Extracted 58 total links from page
-2026-05-01 16:47:35,015 - INFO - Processing 10 articles...
-2026-05-01 16:47:35,016 - INFO - [1/10] https://www.aviationbusinessnews.com/cabin/airlines/
-2026-05-01 16:47:37,213 - INFO -  Airlines Archives - Aviation Business News...
-2026-05-01 16:47:37,213 - INFO - Keywords: ['MRO']
-2026-05-01 16:47:37,213 - INFO - [2/10] https://www.aviationbusinessnews.com/register/
-2026-05-01 16:47:39,723 - INFO -  Register - Aviation Business News...
-2026-05-01 16:47:39,724 - INFO - Keywords: ['Service', 'service', 'MRO']
-2026-05-01 16:47:39,724 - INFO - [3/10] https://www.aviationbusinessnews.com/mro/aircraft-mro-management/
-2026-05-01 16:47:42,582 - INFO -  Aircraft & Airlines...
-2026-05-01 16:47:42,583 - INFO - Keywords: ['contract', 'engine', 'MRO', 'agreement', 'maintenance', 'Maintenance', 'support']
-2026-05-01 16:47:42,583 - INFO - [4/10] https://www.aviationbusinessnews.com/low-cost/
-2026-05-01 16:47:44,063 - INFO -  UK LCCs rule out fuel surcharges despite Middle East supply ...
-2026-05-01 16:47:44,064 - INFO - Keywords: ['contract', 'service', 'engine', 'MRO', 'agreement', 'maintenance', 'support']
-2026-05-01 16:47:44,064 - INFO - [5/10] https://www.aviationbusinessnews.com/low-cost/regional-review/
-2026-05-01 16:47:46,071 - INFO -  Regional Review...
-2026-05-01 16:47:46,071 - INFO - Keywords: ['agreement', 'MRO']
-2026-05-01 16:47:46,073 - INFO - [6/10] https://www.aviationbusinessnews.com/mro/parts-components/
-2026-05-01 16:47:48,595 - INFO -  Parts & Components...
-2026-05-01 16:47:48,595 - INFO - Keywords: ['service', 'engine', 'MRO', 'agreement', 'Agreement', 'Engine', 'support']
-2026-05-01 16:47:48,597 - INFO - [7/10] https://www.aviationbusinessnews.com/cabin/zim-completes-aircraft-reconfiguration-technologies-sale-
-2026-05-01 16:47:50,632 - INFO -  ZIM completes Aircraft Reconfiguration Technologies sale to ...
-2026-05-01 16:47:50,633 - INFO - Keywords: ['service', 'Repair', 'MRO']
-2026-05-01 16:47:50,633 - INFO - [8/10] https://www.aviationbusinessnews.com/cargo/passenger-freighter-conversions/
-2026-05-01 16:47:53,587 - INFO -  Passenger-to-Freighter Conversions...
-2026-05-01 16:47:53,587 - INFO - Keywords: ['Service', 'contract', 'service', 'MRO']
-2026-05-01 16:47:53,588 - INFO - [9/10] https://www.aviationbusinessnews.com/rrmavi_admin_tool?action=lostpassword
-2026-05-01 16:47:57,896 - INFO -  Password Lost...
-2026-05-01 16:47:57,897 - INFO - Keywords: ['Service', 'service', 'MRO']
-2026-05-01 16:47:57,898 - INFO - [10/10] https://www.aviationbusinessnews.com/mro/facilities/
-2026-05-01 16:48:00,685 - INFO -  Facilities/Hangars...
-2026-05-01 16:48:00,685 - INFO - Keywords: ['service', 'engine', 'MRO', 'agreement', 'maintenance', 'support', 'component repair']
-2026-05-01 16:48:00,687 - INFO -
- https://www.aviationbusinessnews.com/mro/latest-news-mro/: 10 articles
-
-
- Found 35 relevant articles
-
- Articles by Domain:
- mrobusinesstoday.com: 5
- ainonline.com: 10
- mroglobal-online.com: 10
- aviationbusinessnews.com: 10
-
- Top Keywords Found:
-mro: 26 occurrences
-service: 24 occurrences
-maintenance: 24 occurrences
-support: 19 occurrences
-engine: 16 occurrences
-agreement: 6 occurrences
-repair: 5 occurrences
-overhaul: 4 occurrences
-contract: 4 occurrences
-component repair: 2 occurrences
-
- Data exported to:
- CSV: data/exports\mro_articles_20260501_164802.csv
- JSON: data/exports\mro_articles_20260501_164802.json
-
- Article Preview (first 5):
-   1. [mrobusinesstoday.com] LATAM Airlines taps Rolls-Royce to power Boeing 787 fleet expansion...
- Keywords: service, Overhaul, engine, Repair, MRO
-   2. [mrobusinesstoday.com] Airbus earnings slide highlights supply chain pressures...
- Keywords: service, engine, MRO, maintenance, support
-   3. [mrobusinesstoday.com] Contact Us - MRO Business Today, Latest Aerospace News...
- Keywords: MRO
-   4. [mrobusinesstoday.com] How is AMC Technology building the backbone of a homegrown interiors ecosystem?...
- Keywords: MRO, maintenance, repair, support, component repair
-   5. [mrobusinesstoday.com] Category - MRO-Events News...
- Keywords: MRO, maintenance
-
-============================================================
-Scraping completed!
-============================================================
+class MROScraper:
+    """Simple scraper - just works"""
+    
+    def __init__(self, config: ScraperConfig = None):
+        self.config = config or ScraperConfig()
+        self.session = requests.Session()
+        self.logger = setup_logging()
+        self.keyword_pattern = compile_keyword_pattern(self.config.KEYWORDS)
+        
+        # Basic headers only
+        self.session.headers.update({
+            'User-Agent': random.choice(USER_AGENTS),
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'Accept-Encoding': 'gzip, deflate',
+            'Connection': 'keep-alive',
+        })
+    
+    def _fetch_page(self, url: str, ignore_robots: bool = False) -> Optional[BeautifulSoup]:
+        """Fetch page - simple retry logic"""
+        
+        for attempt in range(self.config.MAX_RETRIES):
+            try:
+                # Rotate user agent
+                self.session.headers['User-Agent'] = random.choice(USER_AGENTS)
+                
+                # Short delay between retries
+                if attempt > 0:
+                    time.sleep(2 * attempt)
+                
+                response = self.session.get(
+                    url, 
+                    timeout=30,  # Longer timeout
+                    allow_redirects=True,
+                    verify=False,
+                )
+                
+                # Fix encoding
+                if response.encoding and response.apparent_encoding:
+                    response.encoding = response.apparent_encoding
+                
+                # Handle 403 - retry immediately with different UA
+                if response.status_code == 403:
+                    self.logger.warning(f"403 on attempt {attempt + 1}, retrying...")
+                    continue
+                
+                if response.status_code != 200:
+                    self.logger.warning(f"HTTP {response.status_code} on attempt {attempt + 1}")
+                    continue
+                
+                return BeautifulSoup(response.content, 'html.parser')
+                
+            except Exception as e:
+                self.logger.warning(f"Attempt {attempt + 1} failed: {str(e)[:60]}")
+                time.sleep(2)
+                
+        return None
+    
+    def _extract_article_links(self, soup: BeautifulSoup, base_url: str) -> List[str]:
+        """Extract links - simple approach"""
+        links = set()
+        domain = urlparse(base_url).netloc
+        
+        # Get ALL links from the page
+        for a in soup.find_all('a', href=True):
+            href = a['href']
+            full_url = urljoin(base_url, href)
+            
+            # Only same-domain links
+            if domain in full_url and full_url != base_url:
+                # Filter duplicates and non-article URLs
+                if not any(skip in full_url.lower() for skip in [
+                    '#', 'javascript:', 'mailto:', '.jpg', '.png', '.pdf',
+                    'login', 'subscribe', 'author', 'category', 'tag'
+                ]):
+                    links.add(full_url)
+        
+        self.logger.info(f"Extracted {len(links)} total links from page")
+        return list(links)[:MAX_ARTICLES_PER_SITE * 2]
+    
+    def _extract_article_content(self, url: str, soup: BeautifulSoup) -> Optional[Article]:
+        """Extract article content"""
+        domain = urlparse(url).netloc.replace('www.', '')
+        
+        # Get title
+        title = None
+        for selector in ['h1', 'title', '[property="og:title"]', '.entry-title', '.post-title']:
+            elem = soup.select_one(selector)
+            if elem:
+                title = elem.get('content', '') if selector == '[property="og:title"]' else elem.get_text()
+                title = title.strip()
+                if title and len(title) > 10:
+                    break
+        
+        if not title:
+            return None
+        
+        # Get all text
+        body = soup.find('body')
+        if body:
+            for tag in body(['script', 'style', 'nav', 'header', 'footer', 'aside']):
+                tag.decompose()
+            full_text = body.get_text(separator=' ', strip=True)
+        else:
+            full_text = soup.get_text(separator=' ', strip=True)
+        
+        # Check keywords
+        text_to_search = f"{title} {full_text[:3000]}"
+        matched = self.keyword_pattern.findall(text_to_search)
+        matched_keywords = list(set(matched))
+        
+        if not matched_keywords:
+            return None
+        
+        # Get date
+        pub_date = None
+        time_elem = soup.find('time')
+        if time_elem:
+            pub_date = time_elem.get('datetime') or time_elem.get_text(strip=True)
+        
+        # Summary
+        meta = soup.select_one('[name="description"]')
+        summary = meta.get('content', '') if meta else full_text[:300]
+        
+        return Article(
+            url=url,
+            title=title[:200],
+            source_domain=domain,
+            publication_date=pub_date,
+            summary=summary[:500],
+            full_text=full_text[:5000],
+            matched_keywords=matched_keywords
+        )
+    
+    def scrape_site(self, base_url: str, ignore_robots: bool = False) -> List[Article]:
+        """Scrape one site"""
+        articles = []
+        self.logger.info(f"\n{'='*50}\nScraping: {base_url}\n{'='*50}")
+        
+        # Fetch main page
+        soup = self._fetch_page(base_url)
+        if not soup:
+            self.logger.error(f"Could not access {base_url}")
+            return articles
+        
+        # Get article links
+        article_urls = self._extract_article_links(soup, base_url)
+        
+        if not article_urls:
+            self.logger.warning(f"No article links found on {base_url}")
+            # Try to get any links at all
+            self.logger.info("Trying alternative extraction...")
+            for a in soup.find_all('a', href=True)[:20]:
+                self.logger.info(f"  Link: {a.get('href')[:100]}")
+        
+        self.logger.info(f"Processing {min(len(article_urls), MAX_ARTICLES_PER_SITE)} articles...")
+        
+        for i, url in enumerate(article_urls[:MAX_ARTICLES_PER_SITE]):
+            self.logger.info(f"[{i+1}/{min(len(article_urls), MAX_ARTICLES_PER_SITE)}] {url[:100]}")
+            
+            # Short delay
+            time.sleep(random.uniform(1, 3))
+            
+            article_soup = self._fetch_page(url)
+            if not article_soup:
+                continue
+            
+            article = self._extract_article_content(url, article_soup)
+            if article:
+                articles.append(article)
+                self.logger.info(f" {article.title[:60]}...")
+                self.logger.info(f"Keywords: {article.matched_keywords}")
+        
+        return articles
+    
+    def scrape_all(self, urls: List[str], force_ignore_robots: bool = False) -> List[Article]:
+        """Scrape all sites"""
+        all_articles = []
+        
+        for url in urls:
+            articles = self.scrape_site(url)
+            all_articles.extend(articles)
+            self.logger.info(f"\n {url}: {len(articles)} articles\n")
+            time.sleep(random.uniform(2, 4))
+        
+        return all_articles
